@@ -27,10 +27,11 @@ import com.edu.pu.cs.couponapp.R;
 
 import com.github.anzewei.parallaxbacklayout.ParallaxBackActivityHelper;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackLayout;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.appindexing.Action;
+import com.google.firebase.appindexing.FirebaseAppIndex;
+import com.google.firebase.appindexing.FirebaseUserActions;
+import com.google.firebase.appindexing.Indexable;
+import com.google.firebase.appindexing.builders.Actions;
 
 
 import java.util.Timer;
@@ -51,11 +52,6 @@ public class TabShow extends TabActivity {
 	private static boolean FINISH = false;
 	boolean isShow;
 	Toast backToast;
-	/**
-	 * ATTENTION: This was auto-generated to implement the App Indexing API.
-	 * See https://g.co/AppIndexing/AndroidStudio for more information.
-	 */
-	private GoogleApiClient client;
 
 	private ParallaxBackActivityHelper mHelper;
 
@@ -71,10 +67,6 @@ public class TabShow extends TabActivity {
 
 		initResourceRefs();
 		initSettings();
-
-		// ATTENTION: This was auto-generated to implement the App Indexing API.
-		// See https://g.co/AppIndexing/AndroidStudio for more information.
-		client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 	}
 
 	private void initResourceRefs() {
@@ -151,35 +143,19 @@ public class TabShow extends TabActivity {
 	 * See https://g.co/AppIndexing/AndroidStudio for more information.
 	 */
 	public Action getIndexApiAction() {
-		Thing object = new Thing.Builder()
-				.setName("TabShow Page") // TODO: Define a title for the content shown.
-				// TODO: Make sure this auto-generated URL is correct.
-				.setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-				.build();
-		return new Action.Builder(Action.TYPE_VIEW)
-				.setObject(object)
-				.setActionStatus(Action.STATUS_TYPE_COMPLETED)
-				.build();
+		return Actions.newView("TabShow Page", Uri.parse("http://[ENTER-YOUR-URL-HERE]").toString());
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-
-		// ATTENTION: This was auto-generated to implement the App Indexing API.
-		// See https://g.co/AppIndexing/AndroidStudio for more information.
-		client.connect();
-		AppIndex.AppIndexApi.start(client, getIndexApiAction());
+		FirebaseUserActions.getInstance().start(getIndexApiAction());
 	}
 
 	@Override
 	public void onStop() {
+		FirebaseUserActions.getInstance().end(getIndexApiAction());
 		super.onStop();
-
-		// ATTENTION: This was auto-generated to implement the App Indexing API.
-		// See https://g.co/AppIndexing/AndroidStudio for more information.
-		AppIndex.AppIndexApi.end(client, getIndexApiAction());
-		client.disconnect();
 	}
 
 	/**

@@ -4,6 +4,7 @@
     package="com.edu.pu.cs.couponapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -20,8 +21,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.VIBRATE"/>
 
-
-    <uses-sdk android:minSdkVersion="9" />
 
     <application
         android:name=".FireCoupon"
@@ -86,10 +85,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -97,16 +92,6 @@
         <meta-data android:name="design_width" android:value="768">
         </meta-data>
         <meta-data android:name="design_height" android:value="1280">
-        </meta-data>
-
-        //PushSDK
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="582c0015c62dca0b75000a61">
-        </meta-data>
-        <meta-data
-            android:name="UMENG_MESSAGE_SECRET"
-            android:value="b5a28ad374b66aa9418b3fa00467a0cc">
         </meta-data>
 
 

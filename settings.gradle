@@ -1,1 +1,1 @@
-include ':app', ':gridviewimage', ':PushSDK'
+include ':app', ':gridviewimage'
