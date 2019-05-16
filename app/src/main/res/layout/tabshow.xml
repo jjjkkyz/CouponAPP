@@ -56,7 +56,7 @@
                    android:id="@+id/tab_item_like"
                    style="@style/main_tab_bottom"
                    android:drawableTop="@drawable/item_like_bg"
-                   android:text="最爱"
+                   android:text="周边"
                    android:textSize="11sp"
                    android:textColor="@drawable/color_radiobtn_text"
                     android:layout_width="match_parent"

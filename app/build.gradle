@@ -22,10 +22,6 @@ android {
         exclude 'META-INF/maven/com.squareup.okhttp/okhttp/pom.xml'
         exclude 'META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.properties'
         exclude 'META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.xml'
-        exclude 'META-INF/maven/com.wilddog.client/wilddog-core-android/pom.xml'
-        exclude 'META-INF/maven/com.wilddog.client/wilddog-core-android/pom.properties'
-        exclude 'META-INF/maven/com.wilddog.client/wilddog-auth-android/pom.xml'
-        exclude 'META-INF/maven/com.wilddog.client/wilddog-auth-android/pom.properties'
         exclude 'META-INF/NOTICE' // will not include NOTICE file
         exclude 'META-INF/LICENSE' // will not include LICENSE file
         exclude 'META-INF/notice.txt'
@@ -86,7 +82,6 @@ dependencies {
     implementation 'com.hejunlin.superindicatorlibray:superindicatorlibray:1.0.2'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.google.firebase:firebase-database:17.0.0'
-    implementation 'com.firebase:firebase-client-android:2.3.1'
     implementation 'com.google.firebase:firebase-storage:17.0.0'
 
     implementation 'com.github.bumptech.glide:glide:3.7.0'

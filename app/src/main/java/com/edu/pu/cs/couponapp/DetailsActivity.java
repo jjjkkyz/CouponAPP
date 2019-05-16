@@ -167,13 +167,13 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         System.out.println(likeornot.size() + "----------sizq");
         if (likeornot.size() == 1) {
             isLikeOrNot = true;
-            Btn_like.setText("移出最爱");
+            Btn_like.setText("移出周边");
             Btn_like.setBackgroundColor(Color.parseColor("#00a0f0"));
             Btn_like.setFocusBackgroundColor(Color.parseColor("#0fafff"));
             Btn_like.setIconResource("\uf00d");
         } else {
             isLikeOrNot = false;
-            Btn_like.setText("加入最爱");
+            Btn_like.setText("加入周边");
             Btn_like.setBackgroundColor(Color.parseColor("#ea5413"));
             Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
             Btn_like.setIconResource("\uf08a");
@@ -193,7 +193,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
                     while (cursor.moveToNext()) {
                         System.out.println(cursor.getString(cursor.getColumnIndex("directory")) + "---jiaruyoumeiyouchengg");
                     }
-                    Btn_like.setText("移出最爱");
+                    Btn_like.setText("移出周边");
                     Btn_like.setBackgroundColor(Color.parseColor("#00a0f0"));
                     Btn_like.setFocusBackgroundColor(Color.parseColor("#0fafff"));
                     Btn_like.setIconResource("\uf00d");
@@ -207,7 +207,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
                     while (cursor.moveToNext()) {
                         System.out.println(cursor.getString(cursor.getColumnIndex("directory")) + "---shanchuyoumeiyouchengg");
                     }
-                    Btn_like.setText("加入最爱");
+                    Btn_like.setText("加入周边");
                     Btn_like.setBackgroundColor(Color.parseColor("#ea5413"));
                     Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
                     Btn_like.setIconResource("\uf08a");

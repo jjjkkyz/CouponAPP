@@ -24,9 +24,11 @@ import com.example.gridviewimage.view.adapter.GridViewImageAdapter;
 import com.example.gridviewimage.view.controls.ImageGridView;
 
 import com.github.anzewei.parallaxbacklayout.ParallaxActivityBase;
-import com.wilddog.client.SyncError;
-import com.wilddog.client.SyncReference;
-import com.wilddog.client.WilddogSync;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
@@ -55,13 +57,6 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
     //Controls the initialization
     ImageGridView image_gridView = null;
 
-
-    private String[] a = new String[10];
-    private List<String> bigtitle = new ArrayList<String>();
-
-    private List<String> zjqxx = new ArrayList<String>();
-    private String bigtitle1, zjqxx1;
-
     TextView title_big, title_xx;
 
     private String map = null;
@@ -75,6 +70,9 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
     private List<String> DetailsimgList = new ArrayList<String>();
 
     private Context mContext;
+
+    private DatabaseReference mFirebasestore;
+    private DatabaseReference mFirebaselogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,76 +91,22 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
 
         initView();
 
-        final String url = getIntent().getStringExtra("url");
-//              url = "https://fireapp-1a82c.firebaseio.com/kfc_";
-        String c = url + "title";
-        String counturl = getIntent().getStringExtra("counturl");
+         String url = getIntent().getStringExtra("url");
         //获取顶部logo
-//        String Titlelogo = counturl + "/titlelogo";
-//        mFiretitlelogo = new Firebase(Titlelogo);
-//        mFiretitlelogo.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String logo = dataSnapshot.getValue(String.class);
-//                Glide.with(Coupon_GridActivity.this).load(logo).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().thumbnail(0.1f).error(com.example.gridviewimage.R.mipmap.image_error).into(titlelogo);
-//                TitleLogo = logo;
-//            }
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {}
-//        });
-        //Wilddog版
-        String Titlelogo = counturl + "/titlelogo";
-        SyncReference WDtitlelogo = WilddogSync.getInstance().getReference(Titlelogo);
-        WDtitlelogo.addValueEventListener(new com.wilddog.client.ValueEventListener() {
+        TitleLogo = url + "/titlelogo";
+        mFirebaselogo = FirebaseDatabase.getInstance().getReference(TitleLogo);
+        mFirebaselogo.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-                String logo = snapshot.getValue().toString();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String logo = dataSnapshot.getValue(String.class);
                 Glide.with(Coupon_GridActivity.this).load(logo).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().thumbnail(0.1f).error(com.example.gridviewimage.R.mipmap.image_error).into(titlelogo);
                 TitleLogo = logo;
             }
-
             @Override
-            public void onCancelled(SyncError error) {
-
-            }
+            public void onCancelled(DatabaseError firebaseError) {}
         });
 
-
-//       获取该商家条数,count
-//        mFirebasecount = new Firebase(counturl);
-//
-//        mFirebasecount.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                long count = dataSnapshot.getChildrenCount();
-//
-//                a = new String[(int) count - 1];
-//                getStringValue(a, url);
-//
-//                dialog5.cancel();
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//            }
-//        });
-        //Wilddog版
-        SyncReference WDcount = WilddogSync.getInstance().getReference(counturl);
-        WDcount.addValueEventListener(new com.wilddog.client.ValueEventListener() {
-            @Override
-            public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-                long count = snapshot.getChildrenCount();
-                a = new String[(int) count - 1];
-                getStringValue(a, url);
-                dialog5.cancel();
-            }
-
-            @Override
-            public void onCancelled(SyncError error) {
-
-            }
-        });
-
+        getStringValue(url+"/list");
 
 //        获取数据后，在这里点击就会把标题图片和内容传递过去，这里前提是你得保证有数据
         image_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -179,7 +123,6 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
                         in.putExtra("title", titleList.get(i));
                         in.putExtra("imgAddress", imgAddressList.get(i));
                         in.putExtra("content", ContentList.get(i));
-                        in.putExtra("directory", a[i]);
                         in.putExtra("TitleLogo", TitleLogo);
                         in.putExtra("map", map);
                         in.putExtra("listorgrid", listorgrid);
@@ -193,73 +136,41 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
                 }
             }
         });
-
+        dialog5.cancel();
 
     }
 
-    //    private void getStringValue(String[] z, String url) {
-//
-//        for (int i = 0; i < z.length; i++) {
-//            int p = i + 1;
-//            z[i] = url + p;
-//            //System.out.println(a[i] + "-------a[" + i + "]");
-//
-//            mFirebaseDatabase = new Firebase(a[i]);
-//            mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-////                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    //Getting the data from snapshot
-//                    Bean bean = dataSnapshot.getValue(Bean.class);
-//                    System.out.print("content=" + bean.getContent());
-//                    System.out.print("||");
-//                    System.out.print("imgaddress=" + bean.getImgaddress());
-//                    System.out.print("||");
-//                    System.out.print("title=" + bean.getTitle());
-//                    imgAddressList.add(bean.getImgaddress());
-//                    titleList.add(bean.getTitle());
-//                    ContentList.add(bean.getContent());
-//                    DetailsimgList.add(bean.getDetailsimg());
-//                    title_big.setText(titleList.get(0));
-//                    image_gridView.setAdapter(new GridViewImageAdapter(Coupon_GridActivity.this, imgAddressList, 320, 320));
-//
-//
-//                }
-//
-//
-//                @Override
-//                public void onCancelled(FirebaseError firebaseError) {
-//                    System.out.println("The read failed: " + firebaseError.getMessage());
-//
-//                }
-//            });
-//        }
-//
-//    }
-       //Wilddog版
-    private void getStringValue(String[] z, String url){
-        for (int i = 0; i < z.length; i++) {
-            int p = i + 1;
-            z[i] = url + p;
-            SyncReference Database = WilddogSync.getInstance().getReference(a[i]);
-            Database.addValueEventListener(new com.wilddog.client.ValueEventListener() {
-                @Override
-                public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-                    Map bean = (Map) snapshot.getValue();
-                    imgAddressList.add((String) bean.get("imgaddress"));
-                    titleList.add((String) bean.get("title"));
-                    ContentList.add((String) bean.get("content"));
-                    DetailsimgList.add((String) bean.get("detailsimg"));
+        private void getStringValue(String url) {
+
+        mFirebasestore = FirebaseDatabase.getInstance().getReference(url);
+        mFirebasestore.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    //Getting the data from snapshot
+                    Bean bean = postSnapshot.getValue(Bean.class);
+                    System.out.print("content=" + bean.getContent());
+                    System.out.print("||");
+                    System.out.print("imgaddress=" + bean.getImgaddress());
+                    System.out.print("||");
+                    System.out.print("title=" + bean.getTitle());
+                    imgAddressList.add(bean.getImgaddress());
+                    titleList.add(bean.getTitle());
+                    ContentList.add(bean.getContent());
+                    DetailsimgList.add(bean.getDetailsimg());
                     title_big.setText(titleList.get(0));
                     image_gridView.setAdapter(new GridViewImageAdapter(Coupon_GridActivity.this, imgAddressList, 320, 320));
                 }
 
-                @Override
-                public void onCancelled(SyncError error) {
+            }
 
-                }
-            });
-        }
+
+            @Override
+            public void onCancelled(DatabaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+
+            }
+        });
     }
 
     private void initView() {

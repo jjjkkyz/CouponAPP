@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "197373818874-l5nqf5og5b3nn56hvashsv9u0gnu6qld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.edu.pu.cs.couponapp",
+            "certificate_hash": "59e435bdc9975117860f0b07f2eb868069a5a7e5"
+          }
+        },
+        {
           "client_id": "197373818874-4iu67gcshp877gqp35358ub7j1o7uimq.apps.googleusercontent.com",
           "client_type": 3
         }
