@@ -1,300 +1,222 @@
 package com.edu.pu.cs.couponapp.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.edu.pu.cs.couponapp.Adapter.ListAdapter;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.SupportMapFragment;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.Circle;
+import com.amap.api.maps.model.CircleOptions;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.navi.model.NaviLatLng;
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.edu.pu.cs.couponapp.R;
-import com.wilddog.client.ServerValue;
-import com.wilddog.client.SyncError;
-import com.wilddog.client.SyncReference;
-import com.wilddog.client.WilddogSync;
-import com.zhy.autolayout.AutoLayoutActivity;
+import com.edu.pu.cs.couponapp.overlay.PoiOverlay;
+import com.edu.pu.cs.couponapp.util.Utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-/**
- * Created by Administrator on 2016/10/31.
- */
-
-public class LikeActivity extends AutoLayoutActivity  {
-    private ListAdapter adapter;
-    private ListView listView;
-    private String[] a = new String[10];
-    private String map = null;
-    SQLiteDatabase db;
-    String db_name = "coupon";
-    String tb_like_name = "like";
-    int like_count;
-    TextView title_like;
-
-
-
-    // 标题集合
-    private List<String> titleList = new ArrayList<String>();
-    // 图片地址集合
-    private List<String> imgAddressList = new ArrayList<String>();
-    // 文本描述集合
-    private List<String> ContentList = new ArrayList<String>();
-
-    private ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
-    //收藏地址集合
-    private List<String> directory = new ArrayList<String>();
-    //map集合
-    private List<String> mapList = new ArrayList<String>();
-
-    private SwipeRefreshLayout refresh_layout = null;
-//    private Toolbar toolbar;
-    ImageView Liketitle;
-
-    private String listorgrid = "like";
-
-    private List<String> DetailsimgList = new ArrayList<String>();
-    String like_logo = null;
-    //有效期
-    private String begindate,enddate;
-    private long servertimestamp;
-    private String DateOver;
+public class LikeActivity extends AppCompatActivity implements AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnInfoWindowClickListener, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter {
+    private AMap mMap;
+    private PoiSearch mPoiSearch;
+    private AMapLocationClient mLocationClient;
+    private AMapLocationClientOption mLocationOption;
+    private Marker mLocationMarker;
+    private Circle mLocationCircle;
+    private PoiOverlay mPoiOverlay;
+    private AMapLocation mCurrentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_like);
-        Liketitle = (ImageView) findViewById(R.id.liketitle);
-        int resource = R.drawable.liketitle;
-        Glide.with(LikeActivity.this).load(resource).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().thumbnail(0.1f).error(com.example.gridviewimage.R.mipmap.image_error).into(Liketitle);
-
-        SyncReference liketitle = WilddogSync.getInstance().getReference("liketitle/");
-        liketitle.addValueEventListener(new com.wilddog.client.ValueEventListener() {
-            @Override
-            public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-                like_logo = snapshot.getValue().toString();
-            }
-
-            @Override
-            public void onCancelled(SyncError error) {
-
-            }
-        });
-
-
-        listView = (ListView) findViewById(R.id.listview_2);
-        listView.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        title_like = (TextView) findViewById(R.id.title_like);
-        refresh_layout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
-        refresh_layout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                判断集合里边是否有数据
-                if (titleList.size() == 0 || imgAddressList.size() == 0 || ContentList.size() == 0) {
-                    Toast.makeText(LikeActivity.this, "获取数据失败...", Toast.LENGTH_SHORT).show();
-                } else {
-//                    其实这两个判断可以和在一起，但是我现在我没法测试，所以我就没和，这样比较保险，后期有时间你和起来就行
-//                    判断集合中获取出来的某个数据是否为空字符串
-                    if (!titleList.get(i).equals("") || !imgAddressList.get(i).equals("") || !ContentList.get(i).equals("")) {
-                        Intent in = new Intent(LikeActivity.this, DetailsActivity.class);
-                        in.putExtra("title", titleList.get(i));
-                        in.putExtra("imgAddress", imgAddressList.get(i));
-                        in.putExtra("content", ContentList.get(i));
-                        in.putExtra("directory", directory.get(i));
-                        in.putExtra("TitleLogo",like_logo);
-                        in.putExtra("map",mapList.get(i));
-                        in.putExtra("listorgrid",listorgrid);
-                        in.putExtra("detailsimgOrnot",DetailsimgList.get(i));
-
-                        startActivity(in);
-                    } else {
-                        Toast.makeText(LikeActivity.this, "获取数据失败...", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                clearData();
-                getdbData();
-            }
-        });
-    }
-
-
-
-    private void clearData(){
-        db = null;
-        like_count = 0;
-        directory = refreshList(directory);
-        imgAddressList = refreshList(imgAddressList);
-        titleList = refreshList(titleList);
-        ContentList = refreshList(ContentList);
-        if (list == null) {
-            list = new ArrayList<Map<String, String>>();
-        } else {
-            list.clear();
-        }
-    }
-    private List<String> refreshList(List<String> list) {
-        if (list == null) {
-            list = new ArrayList<String>();
-        } else {
-            list.clear();
-        }
-        return list;
+        setContentView(R.layout.map_main);
+        setUpMapIfNeeded();
+        initLocation();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        clearData();
-        getdbData();
+    protected void onResume() {
+        super.onResume();
+        setUpMapIfNeeded();
     }
 
-    private void getdbData() {
-        db = openOrCreateDatabase(db_name, Context.MODE_PRIVATE, null);
-        Cursor cursor = null;
-        cursor = db.rawQuery("Select * from like", null);
-        while (cursor.moveToNext()) {
-            directory.add(cursor.getString(cursor.getColumnIndex("directory")));
-            mapList.add(cursor.getString(cursor.getColumnIndex("map")));
-            //可以将数据set-》实体类对象集合->add到集合
-        }
-        like_count = directory.size();
-        title_like.setText("已收藏优惠券(" + like_count + ")");
-        SyncReference ServerTime = WilddogSync.getInstance().getReference("servertimestamp");
-        ServerTime.setValue(ServerValue.TIMESTAMP);
-        ServerTime.addListenerForSingleValueEvent(new com.wilddog.client.ValueEventListener() {
-            @Override
-            public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-                servertimestamp = (long) snapshot.getValue();
-            }
-            @Override
-            public void onCancelled(SyncError error) {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyLocation();
+    }
 
+    private void setUpMapIfNeeded() {
+        if (mMap == null) {
+            mMap = ((SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map)).getMap();
+            mMap.setOnMarkerClickListener(this);
+            mMap.setOnInfoWindowClickListener(this);
+            mMap.setInfoWindowAdapter(this);
+        }
+    }
+
+    /**
+     * 进行poi搜索
+     *
+     * @param lat
+     * @param lon
+     */
+    private void initPoiSearch(double lat, double lon) {
+        if (mPoiSearch == null) {
+            PoiSearch.Query poiQuery = new PoiSearch.Query("", "餐饮服务");
+            LatLonPoint centerPoint = new LatLonPoint(lat, lon);
+            PoiSearch.SearchBound searchBound = new PoiSearch.SearchBound(centerPoint, 5000);
+            mPoiSearch = new PoiSearch(this.getApplicationContext(), poiQuery);
+            mPoiSearch.setBound(searchBound);
+            mPoiSearch.setOnPoiSearchListener(this);
+            mPoiSearch.searchPOIAsyn();
+        }
+    }
+
+
+    private void destroyLocation() {
+        if (mLocationClient != null) {
+            mLocationClient.unRegisterLocationListener(this);
+            mLocationClient.onDestroy();
+        }
+    }
+
+    /**
+     * 初始化定位
+     */
+    private void initLocation() {
+        mLocationOption = new AMapLocationClientOption();
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setOnceLocation(true);
+        mLocationClient = new AMapLocationClient(this.getApplicationContext());
+        mLocationClient.setLocationListener(this);
+        mLocationClient.startLocation();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+
+        if (aMapLocation == null || aMapLocation.getErrorCode() != AMapLocation.LOCATION_SUCCESS) {
+            Toast.makeText(this,aMapLocation.getErrorInfo()+"  "+aMapLocation.getErrorCode(), Toast.LENGTH_LONG).show();
+            return;
+        }
+        mCurrentLocation = aMapLocation;
+        LatLng curLatLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+        if (mLocationMarker == null) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(curLatLng);
+            markerOptions.anchor(0.5f, 0.5f);
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.navi_map_gps_locked));
+            mLocationMarker = mMap.addMarker(markerOptions);
+        }
+        if (mLocationCircle == null) {
+            CircleOptions circleOptions = new CircleOptions();
+            circleOptions.center(curLatLng);
+            circleOptions.radius(aMapLocation.getAccuracy());
+            circleOptions.strokeWidth(2);
+            circleOptions.strokeColor(getResources().getColor(R.color.stroke));
+            circleOptions.fillColor(getResources().getColor(R.color.fill));
+            mLocationCircle = mMap.addCircle(circleOptions);
+        }
+        initPoiSearch(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+    }
+
+    @Override
+    public void onPoiSearched(PoiResult poiResult, int i) {
+        if (i != AMapException.CODE_AMAP_SUCCESS || poiResult == null) {
+            return;
+        }
+        if (mPoiOverlay != null) {
+            mPoiOverlay.removeFromMap();
+        }
+        mPoiOverlay = new PoiOverlay(mMap, poiResult.getPois());
+        mPoiOverlay.addToMap();
+        mPoiOverlay.zoomToSpan();
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        if (mLocationMarker == marker) {
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * 自定义marker点击弹窗内容
+     *
+     * @param marker
+     * @return
+     */
+    @Override
+    public View getInfoWindow(final Marker marker) {
+        View view = getLayoutInflater().inflate(R.layout.poikeywordsearch_uri,
+                null);
+        TextView title = (TextView) view.findViewById(R.id.title);
+        title.setText(marker.getTitle());
+
+        TextView snippet = (TextView) view.findViewById(R.id.snippet);
+        int index = mPoiOverlay.getPoiIndex(marker);
+        float distance = mPoiOverlay.getDistance(index);
+        String showDistance = Utils.getFriendlyDistance((int) distance);
+        snippet.setText("距当前位置" + showDistance);
+        ImageButton button = (ImageButton) view
+                .findViewById(R.id.start_amap_app);
+        // 调起导航
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAMapNavi(marker);
             }
         });
-        if (directory.size() == 0) {
-            Toast.makeText(LikeActivity.this, "您还没收藏优惠券呦~", Toast.LENGTH_SHORT).show();
-           list.clear();
-            adapter = new ListAdapter(list, LikeActivity.this);
-            listView.setAdapter(adapter);
-            refresh_layout.setRefreshing(false);
-        } else {
-            for (int i = 0; i < like_count; i++) {
-
-//                mFirelike = new Firebase(directory.get(i));
-//                final int finalI = i;
-//                mFirelike.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        Bean like = dataSnapshot.getValue(Bean.class);
-//                        imgAddressList.add(like.getImgaddress());
-//                        titleList.add(like.getTitle());
-//                        ContentList.add(like.getContent());
-//                        DetailsimgList.add(like.getDetailsimg());
-//                        Map<String, String> map = new HashMap<String, String>();
-//                        map.put("title", like.getTitle());
-//                        map.put("content", like.getContent());
-//                        map.put("imgAddress", like.getImgaddress());
-////                    Log.e("TagActivity",bean.getImgaddress());
-//                        list.add(map);
-//                        if (finalI == like_count - 1) {
-//                            adapter = new ListAdapter(list, LikeActivity.this);
-//                            listView.setAdapter(adapter);
-//                            refresh_layout.setRefreshing(false);
-//                            //dialog.cancel();
-//                        }
-//                    }
-//                    @Override
-//                    public void onCancelled(FirebaseError firebaseError) {}
-//                });
-                   //Wilddog版
-                //获取服务器时间
-
-                Log.e("TAG---",directory.get(i).toString());
-                SyncReference WDlike = WilddogSync.getInstance().getReference(directory.get(i));
-                final int finalI = i;
-                WDlike.addValueEventListener(new com.wilddog.client.ValueEventListener() {
-                    @Override
-                    public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-                        Map bean = (Map) snapshot.getValue();
-                        imgAddressList.add((String) bean.get("imgaddress"));
-                        titleList.add((String) bean.get("title"));
-                        ContentList.add((String) bean.get("content"));
-                        DetailsimgList.add((String) bean.get("detailsimg"));
-                        begindate = (String) bean.get("begindate");
-                        enddate = (String) bean.get("enddate");
-                        //判断是否超出有效期
-                        SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String begintime = begindate+" " + "00:00:00";
-                        String endtime = enddate+ " " + "24:00:00";
-                        Date date1 = null;
-                        Date date2 = null;
-                        try {
-                            date1 = format.parse(endtime);
-                            date2 = format.parse(begintime);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        //Log.e("TAG", String.valueOf(date.getTime()));
-                        long end = date1.getTime();
-                        long begin = date2.getTime();
-                        if (begin>servertimestamp) {
-                            DateOver = "0";//未到优惠券开始时间、未开始
-                            Log.e("TAG---",DateOver);
-                        }else if (begin<servertimestamp&&servertimestamp<=end) {
-                            DateOver = "1";//优惠券的优惠时间、优惠中
-                            Log.e("TAG--",DateOver);
-                        }else if (servertimestamp>end) {
-                            DateOver = "2";//超过优惠券的结束时间、已过期
-                            Log.e("TAG--",DateOver);
-                        }
-                        Map<String, String> map = new HashMap<String, String>();
-                        map.put("title", (String) bean.get("title"));
-                        map.put("content", (String) bean.get("content"));
-                        map.put("imgAddress", (String) bean.get("imgaddress"));
-                        map.put("dateover", DateOver);
-                        list.add(map);
-                        if (finalI == like_count - 1){
-                            adapter = new ListAdapter(list, LikeActivity.this);
-                            listView.setAdapter(adapter);
-                            refresh_layout.setRefreshing(false);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(SyncError error) {}
-                });
-
-            }
-        }
+        return view;
     }
 
-    public void others(View v) {
-        Intent it = new Intent(this, AboutActivity.class);
-        startActivity(it);
+    /**
+     * 点击一键导航按钮跳转到导航页面
+     *
+     * @param marker
+     */
+    private void startAMapNavi(Marker marker) {
+        if (mCurrentLocation == null) {
+            return;
+        }
+        Intent intent = new Intent(this, RouteNaviActivity.class);
+        intent.putExtra("gps", false);
+        intent.putExtra("start", new NaviLatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
+        intent.putExtra("end", new NaviLatLng(marker.getPosition().latitude, marker.getPosition().longitude));
+        startActivity(intent);
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        return null;
     }
 }
-
 
