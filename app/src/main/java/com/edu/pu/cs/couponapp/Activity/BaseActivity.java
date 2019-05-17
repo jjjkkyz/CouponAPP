@@ -1,17 +1,15 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
 /**
  * Created by Administrator on 2016/11/12.
  */
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 
+import com.edu.pu.cs.couponapp.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.lang.reflect.Field;

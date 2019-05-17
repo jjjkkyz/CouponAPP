@@ -1,4 +1,4 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -1,54 +1,35 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.edu.pu.cs.couponapp.ui.TabShow;
-import com.example.gridviewimage.view.acitvity.MaxPictureActivity;
+import com.edu.pu.cs.couponapp.R;
 import com.example.gridviewimage.view.adapter.GridViewImageAdapter;
 import com.example.gridviewimage.view.controls.ImageGridView;
 
 import com.wilddog.client.ChildEventListener;
 import com.wilddog.client.Query;
-import com.wilddog.client.ServerValue;
 import com.wilddog.client.SyncError;
 import com.wilddog.client.SyncReference;
 import com.wilddog.client.WilddogSync;
 import com.zhy.autolayout.AutoLayoutActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import me.iwf.photopicker.PhotoPreview;
-import qiu.niorgai.StatusBarCompat;
 
 
 public class SearchAcitivity extends AutoLayoutActivity {

@@ -1,25 +1,23 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SyncAdapterType;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.service.quicksettings.Tile;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.edu.pu.cs.couponapp.ui.TabShow;
+import com.edu.pu.cs.couponapp.Bean.Bean;
+import com.edu.pu.cs.couponapp.R;
+import com.edu.pu.cs.couponapp.ToastUtils;
 import com.example.gridviewimage.view.adapter.GridViewImageAdapter;
 import com.example.gridviewimage.view.controls.ImageGridView;
 
@@ -29,15 +27,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import qiu.niorgai.StatusBarCompat;
-
-import static com.edu.pu.cs.couponapp.R.id.imageView;
 
 /**
  * Created by Administrator on 2016/10/27.

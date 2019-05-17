@@ -1,7 +1,6 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -9,31 +8,22 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 
+import com.edu.pu.cs.couponapp.R;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackActivityHelper;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackLayout;
 import com.wilddog.client.SyncError;
 import com.wilddog.client.SyncReference;
 import com.wilddog.client.WilddogSync;
-import com.wilddog.client.receiver.WilddogAuthCastReceiver;
 import com.zhy.autolayout.AutoLayoutActivity;
 
-import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 import mehdi.sakout.fancybuttons.FancyButton;
 import qiu.niorgai.StatusBarCompat;
 import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.ValueEventListener;
-import com.wilddog.client.SyncError;
-import com.wilddog.client.SyncReference;
-
-import com.wilddog.client.WilddogSync;
-
-import java.util.Map;
 
 
 /**

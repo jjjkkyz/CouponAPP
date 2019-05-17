@@ -1,4 +1,4 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

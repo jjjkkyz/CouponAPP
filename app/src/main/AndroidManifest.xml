@@ -29,7 +29,7 @@
         android:label="@string/app_name"
         >
         <activity
-            android:name=".OriginActivity"
+            android:name=".Activity.OriginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,16 +40,16 @@
             android:name=".ui.TabShow"
             android:screenOrientation="portrait"
             android:theme="@style/notitlebar"/>
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".SearchAcitivity" />
-        <activity android:name=".AdActivity" />
-        <activity android:name=".DetailsActivity" />
-        <activity android:name=".Coupon_GridActivity" />
-        <activity android:name=".Coupon_ListActivity" />
-        <activity android:name=".LikeActivity"/>
-        <activity android:name=".FeedBackAcitivity"/>
-        <activity android:name=".AboutActivity"/>
-        <activity android:name=".ShareAPPActivity"/>
+        <activity android:name=".Activity.HomeActivity" />
+        <activity android:name=".Activity.SearchAcitivity" />
+        <activity android:name=".Activity.AdActivity" />
+        <activity android:name=".Activity.DetailsActivity" />
+        <activity android:name=".Activity.Coupon_GridActivity" />
+        <activity android:name=".Activity.Coupon_ListActivity" />
+        <activity android:name=".Activity.LikeActivity"/>
+        <activity android:name=".Activity.FeedBackAcitivity"/>
+        <activity android:name=".Activity.AboutActivity"/>
+        <activity android:name=".Activity.ShareAPPActivity"/>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

@@ -1,17 +1,14 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 
+import com.edu.pu.cs.couponapp.R;
 import com.edu.pu.cs.couponapp.ui.TabShow;
 import com.zhy.autolayout.AutoLayoutActivity;
 //import com.nian.preferential.ui.TabShow;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import qiu.niorgai.StatusBarCompat;
 

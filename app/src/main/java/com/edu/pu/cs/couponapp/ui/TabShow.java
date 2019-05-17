@@ -20,17 +20,15 @@ import android.widget.RadioGroup;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.edu.pu.cs.couponapp.HomeActivity;
-import com.edu.pu.cs.couponapp.LikeActivity;
-import com.edu.pu.cs.couponapp.SearchAcitivity;
+import com.edu.pu.cs.couponapp.Activity.HomeActivity;
+import com.edu.pu.cs.couponapp.Activity.LikeActivity;
+import com.edu.pu.cs.couponapp.Activity.SearchAcitivity;
 import com.edu.pu.cs.couponapp.R;
 
 import com.github.anzewei.parallaxbacklayout.ParallaxBackActivityHelper;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackLayout;
 import com.google.firebase.appindexing.Action;
-import com.google.firebase.appindexing.FirebaseAppIndex;
 import com.google.firebase.appindexing.FirebaseUserActions;
-import com.google.firebase.appindexing.Indexable;
 import com.google.firebase.appindexing.builders.Actions;
 
 

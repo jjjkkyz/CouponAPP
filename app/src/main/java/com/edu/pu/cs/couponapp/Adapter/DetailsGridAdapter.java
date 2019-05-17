@@ -1,4 +1,4 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.edu.pu.cs.couponapp.R;
 import com.example.gridviewimage.view.adapter.GridViewImageAdapter;
 
 import java.util.ArrayList;

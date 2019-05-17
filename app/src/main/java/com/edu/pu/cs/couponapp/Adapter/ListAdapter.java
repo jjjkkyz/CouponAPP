@@ -1,4 +1,4 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Adapter;
 
 import android.content.Context;
 import android.text.Html;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.edu.pu.cs.couponapp.R;
 
 import java.util.ArrayList;
 import java.util.Map;

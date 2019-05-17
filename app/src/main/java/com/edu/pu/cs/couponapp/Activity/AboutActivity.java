@@ -1,7 +1,6 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -9,11 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.edu.pu.cs.couponapp.BuildConfig;
+import com.edu.pu.cs.couponapp.R;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackActivityHelper;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackLayout;
 import com.zhy.autolayout.AutoLayoutActivity;
-
-import org.w3c.dom.Text;
 
 import qiu.niorgai.StatusBarCompat;
 

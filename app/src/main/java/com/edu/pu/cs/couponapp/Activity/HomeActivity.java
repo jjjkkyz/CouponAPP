@@ -1,31 +1,15 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Gallery;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,10 +18,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.edu.pu.cs.couponapp.Adapter.HomeGridAdapter;
+import com.edu.pu.cs.couponapp.Bean.Bean;
+import com.edu.pu.cs.couponapp.R;
 import com.edu.pu.cs.couponapp.ui.HomePicAdapter;
-import com.edu.pu.cs.couponapp.ui.TabShow;
-import com.github.anzewei.parallaxbacklayout.ParallaxActivityBase;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,15 +30,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hejunlin.superindicatorlibray.CircleIndicator;
 import com.hejunlin.superindicatorlibray.LoopViewPager;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import qiu.niorgai.StatusBarCompat;
 
 
 public class HomeActivity extends AutoLayoutActivity implements OnClickListener {
@@ -331,8 +312,7 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
 
     public void mcd_click() {
         Intent it = new Intent(this, Coupon_ListActivity.class);
-        it.putExtra("url", "coupon_mc/mc_");
-        it.putExtra("counturl", "coupon_mc");
+        it.putExtra("url", "coupon/mc");
         it.putExtra("map", "麦当劳");
         startActivity(it);
 
@@ -341,8 +321,7 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
 
     public void bk_click() {
         Intent it = new Intent(this, Coupon_GridActivity.class);
-        it.putExtra("url", "coupon_bk/bk_");
-        it.putExtra("counturl", "coupon_bk");
+        it.putExtra("url", "coupon/bk");
         it.putExtra("map", "汉堡王");
         startActivity(it);
 

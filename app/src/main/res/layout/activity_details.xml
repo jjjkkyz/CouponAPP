@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/coupon_background"
-    tools:context="com.edu.pu.cs.couponapp.DetailsActivity">
+    tools:context="com.edu.pu.cs.couponapp.Activity.DetailsActivity">
 
 
     <LinearLayout
@@ -87,7 +87,7 @@
                 android:layout_below="@id/textView"
                 android:background="@color/listline" />
 
-            <com.edu.pu.cs.couponapp.GridViewDetails
+            <com.edu.pu.cs.couponapp.ui.GridViewDetails
                 android:id="@+id/detailsgrid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

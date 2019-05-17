@@ -1,4 +1,4 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Bean;
 
 /**
  * Created by Kate on 2016/10/27.

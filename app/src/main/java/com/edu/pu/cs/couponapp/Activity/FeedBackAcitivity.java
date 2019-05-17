@@ -1,22 +1,13 @@
-package com.edu.pu.cs.couponapp;
+package com.edu.pu.cs.couponapp.Activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuPopupHelper;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.ProgressBar;
 
-import com.edu.pu.cs.couponapp.ui.TabShow;
+import com.edu.pu.cs.couponapp.R;
 
 import com.github.anzewei.parallaxbacklayout.ParallaxBackActivityHelper;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackLayout;
@@ -26,8 +17,6 @@ import com.wilddog.client.WilddogSync;
 import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.ValueEventListener;
 import com.zhy.autolayout.AutoLayoutActivity;
-
-import java.lang.reflect.Field;
 
 import qiu.niorgai.StatusBarCompat;
 

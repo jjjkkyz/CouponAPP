@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.edu.pu.cs.couponapp.DetailsActivity;
+import com.edu.pu.cs.couponapp.Activity.DetailsActivity;
 import com.edu.pu.cs.couponapp.R;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
