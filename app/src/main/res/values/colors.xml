@@ -40,4 +40,7 @@
     <color name="colorOrange">#f5aa00</color>
     <color name="divide">#e0e0e0</color>
     <color name="emptyview_background">#F0EFF4</color>
+
+    <color name="fill">#3376d4f3</color>
+    <color name="stroke">#cc3f91fc</color>
 </resources>

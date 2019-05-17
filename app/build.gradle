@@ -108,6 +108,9 @@ dependencies {
     implementation 'com.umeng.umsdk:push:5.0.2'
     implementation 'com.wilddog.client:wilddog-sync-android:2.2.0'
 
+    implementation 'com.amap.api:navi-3dmap:latest.integration'
+    implementation 'com.amap.api:location:latest.integration'
+    implementation 'com.amap.api:search:latest.integration'
 
 
 
