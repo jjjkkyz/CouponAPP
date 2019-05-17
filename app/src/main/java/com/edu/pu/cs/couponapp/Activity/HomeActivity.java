@@ -111,8 +111,8 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
 
 
         //banner 轮播图片加载及点击事件
-         viewpager = (LoopViewPager) findViewById(R.id.viewpager);
-         indicator = (CircleIndicator) findViewById(R.id.indicator);
+        viewpager = (LoopViewPager) findViewById(R.id.viewpager);
+        indicator = (CircleIndicator) findViewById(R.id.indicator);
         bannerRef = myRef.child("banner");
         bannerRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -129,7 +129,6 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
                 map.put("detailsimgOrnot",banner.getDetailsimg());
                 list.add(map);
                 viewpager.setAdapter(new HomePicAdapter(HomeActivity.this, list));
-                viewpager.setLooperPic(true);//是否设置自动轮播
                 indicator.setViewPager(viewpager);
             }
 
@@ -255,33 +254,31 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
 
                 grid2.add(map);
                 //给三个传参集合添加数据
-                urlList2.add(databaseurl + bean.getAbbreviation() + "/" + bean.getAbbreviation() + "_");
-                counturlList2.add(databaseurl + bean.getAbbreviation());
-                mapList2.add(mapurl + bean.getTextlogo());
+                urlList2.add("coupon/" + bean.getAbbreviation());
+                mapList2.add(bean.getTextlogo());
+                }
                 gridview2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                 @Override
+                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //                判断集合里边是否有数据
-                        if (urlList2.size() == 0 || counturlList2.size() == 0 || mapList2.size() == 0) {
-                            Toast.makeText(HomeActivity.this, "获取数据失败...", Toast.LENGTH_SHORT).show();
-                        } else {
+                         if (urlList2.size() == 0 || mapList2.size() == 0) {
+                             Toast.makeText(HomeActivity.this, "获取数据失败...", Toast.LENGTH_SHORT).show();
+                         } else {
 //                    其实这两个判断可以和在一起，但是我现在我没法测试，所以我就没和，这样比较保险，后期有时间你和起来就行
 //                    判断集合中获取出来的某个数据是否为空字符串
-                            if (!urlList2.get(i).equals("") || !counturlList2.get(i).equals("") || !mapList2.get(i).equals("")) {
-                                Intent in = new Intent(HomeActivity.this, Coupon_ListActivity.class);
-                                in.putExtra("url", urlList2.get(i));
-                                in.putExtra("counturl", counturlList2.get(i));
-                                in.putExtra("map", mapList2.get(i));
+                             if (!urlList2.get(i).equals("") || !counturlList2.get(i).equals("") || !mapList2.get(i).equals("")) {
+                                 Intent in = new Intent(HomeActivity.this, Coupon_ListActivity.class);
+                                 in.putExtra("url", urlList2.get(i));
+                                 in.putExtra("map", mapList2.get(i));
 
-                                startActivity(in);
-                            } else {
-                                Toast.makeText(HomeActivity.this, "获取数据失败...", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                }
+                                 startActivity(in);
+                             } else {
+                                 Toast.makeText(HomeActivity.this, "获取数据失败...", Toast.LENGTH_SHORT).show();
+                             }
+                         }
+                     }
+                 }
                 );
-                }
                 adapter = new HomeGridAdapter(grid2, HomeActivity.this);
                 gridview2.setAdapter(adapter);
             }

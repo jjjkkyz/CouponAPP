@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -146,6 +147,7 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
         mFirebasestore.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                list.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //Getting the data from snapshot
                     Bean bean = postSnapshot.getValue(Bean.class);
@@ -154,10 +156,12 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
                     System.out.print("imgaddress=" + bean.getImgaddress());
                     System.out.print("||");
                     System.out.print("title=" + bean.getTitle());
-                    imgAddressList.add(bean.getImgaddress());
-                    titleList.add(bean.getTitle());
-                    ContentList.add(bean.getContent());
-                    DetailsimgList.add(bean.getDetailsimg());
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("title", bean.getTitle());
+                    map.put("content", bean.getContent());
+                    map.put("imgAddress", bean.getImgaddress());
+                    map.put("dateover", "1");
+                    list.add(map);
 
                 }
                 adapter = new ListAdapter(list, Coupon_ListActivity.this);
