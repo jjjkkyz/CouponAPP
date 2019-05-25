@@ -115,10 +115,6 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                final Dialog dialog = new Dialog(mContext, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-//                ImageView imgView = getView();
-//                dialog.setContentView(imgView);
-//                dialog.show();
 //
 ////                判断集合里边是否有数据
 //                if (titleList.size() == 0 || imgAddressList.size() == 0 || ContentList.size() == 0) {
