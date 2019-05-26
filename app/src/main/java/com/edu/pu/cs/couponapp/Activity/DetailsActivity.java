@@ -157,9 +157,9 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         Btn_like.setIconResource("\uf08a");
 //        }
         System.out.println(isLikeOrNot + "---------islikeornot");
-//        Btn_like.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        Btn_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                if (isLikeOrNot == false) {
 //                    db = openOrCreateDatabase(db_name, Context.MODE_PRIVATE, null);
 //                    //String createTable = "CREATE TABLE IF NOT EXISTS " + tb_like_name + "(_id integer primary key autoincrement,directory TEXT)";
@@ -191,9 +191,9 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
 //                    Btn_like.setIconResource("\uf08a");
 //                    isLikeOrNot = false;
 //                }
-//
-//            }
-//        });
+
+            }
+        });
 
 
 //      把传递过来的title和content加载到预设的textview里面
