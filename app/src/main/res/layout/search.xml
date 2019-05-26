@@ -21,17 +21,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.gridviewimage.view.controls.ImageGridView
-            android:id="@+id/image_gridView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        <com.edu.pu.cs.couponapp.ui.GridViewHome
+            android:id="@+id/grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:columnWidth="60dp"
             android:gravity="center"
             android:horizontalSpacing="10dp"
             android:numColumns="2"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp" />
+            android:verticalSpacing="10dp"  />
     </ScrollView>
 
 

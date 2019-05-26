@@ -206,7 +206,7 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
 
 
 
-        //db.delete("like",null,null);
+
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

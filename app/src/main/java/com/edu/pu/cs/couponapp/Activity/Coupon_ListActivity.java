@@ -43,7 +43,6 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
     private ListAdapter adapter;
     private ListView listView;
     private String[] a = new String[10];
-    private String map = null;
 
     private List<String> BeginDateList = new ArrayList<>();
     private List<String> EndDateList = new ArrayList<>();
@@ -91,8 +90,6 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
         dialog5.onStart();
         titlelogo = (ImageView) findViewById(R.id.titlelogo);
         listView = (ListView) findViewById(R.id.listview_2);
-
-        map = getIntent().getStringExtra("map");
 
 
         String url = getIntent().getStringExtra("url");
@@ -166,7 +163,7 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
     public void gomap(View v) {
         if (checkPackage("com.baidu.BaiduMap")) {
             Intent intent = new Intent();
-            intent.setData(Uri.parse("baidumap://map/place/search?query="+map));
+//            intent.setData(Uri.parse("baidumap://map/place/search?query="+map));
             startActivity(intent);
         }else {
             ToastUtils.showShortToast(mContext,"请先安装百度地图~");

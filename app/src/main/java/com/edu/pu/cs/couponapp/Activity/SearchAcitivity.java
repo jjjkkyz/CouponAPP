@@ -1,32 +1,33 @@
 package com.edu.pu.cs.couponapp.Activity;
 
-import android.content.Context;
-import android.database.Cursor;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.edu.pu.cs.couponapp.Adapter.HomeGridAdapter;
 import com.edu.pu.cs.couponapp.R;
-import com.example.gridviewimage.view.adapter.GridViewImageAdapter;
-import com.example.gridviewimage.view.controls.ImageGridView;
 
-import com.wilddog.client.ChildEventListener;
-import com.wilddog.client.Query;
-import com.wilddog.client.SyncError;
-import com.wilddog.client.SyncReference;
-import com.wilddog.client.WilddogSync;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import me.iwf.photopicker.PhotoPreview;
@@ -38,12 +39,13 @@ public class SearchAcitivity extends AutoLayoutActivity {
 	SQLiteDatabase db;
 	String db_name = "coupon";
 	String tb_name = "CouponList";
-	ArrayList<String> photos = new ArrayList<String>();
-	String url = null;
-	String counturl = null;
+	ArrayList<Map<String, String>> grid = new ArrayList<Map<String, String>>();
+	List<String> urlList = new ArrayList<String>();
 	private String[] a = new String[10];
-	ImageGridView image_gridView = null;
+	GridView image_gridView = null;
 	int countdata;
+	DatabaseReference storeRef;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,9 @@ public class SearchAcitivity extends AutoLayoutActivity {
 		setContentView(R.layout.search);
 //		StatusBarCompat.setStatusBarColor(SearchAcitivity.this,getResources().getColor(R.color.background_color_orange));
 //		final ProgressDialog dialog = ProgressDialog.show(this, "稍候片刻", "折價券即將呈現", true, true);
-		image_gridView=(ImageGridView)findViewById(R.id.image_gridView);
-		image_gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
-
+		image_gridView=(GridView)findViewById(R.id.grid);
+        image_gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
+		storeRef = FirebaseDatabase.getInstance().getReference("/coupon");
 
 		sv = (SearchView) this.findViewById(R.id.sv);
 
@@ -93,7 +95,7 @@ public class SearchAcitivity extends AutoLayoutActivity {
 
 			@Override
 			public boolean onQueryTextChange(String str) {
-				photos.clear();
+				grid.clear();
 				return false;
 			}
 
@@ -101,138 +103,49 @@ public class SearchAcitivity extends AutoLayoutActivity {
 			public boolean onQueryTextSubmit(String str) {
 
 				System.out.println(str+"--------------str");
-				url = null;
-				counturl = null;
-				photos.clear();
 				sv.clearFocus();
-				db = openOrCreateDatabase(db_name, Context.MODE_PRIVATE, null);
-				Cursor cursor = null;
-				cursor = db.rawQuery("Select * from CouponList where chinese like '%"+str+"%'", null);
-				while (cursor.moveToNext()) {
-					url = cursor.getString(cursor.getColumnIndex("url"));
-					counturl = cursor.getString(cursor.getColumnIndex("counturl"));
-					//可以将数据set-》实体类对象集合->photos
-				}
-				if (url==null|| counturl==null)
-				{
-					Toast.makeText(SearchAcitivity.this, "搜索失败，未收入此商家优惠信息", Toast.LENGTH_SHORT).show();
-
-				}else {
-					if (counturl.equals("coupon_mc")) {
-						//条数设置
-						SyncReference WDcount = WilddogSync.getInstance().getReference(counturl);
-						WDcount.addValueEventListener(new com.wilddog.client.ValueEventListener() {
-							@Override
-							public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-								long count = snapshot.getChildrenCount();
-								countdata = (int) count;
-								System.out.println("countdata......"+countdata);
-								downloadData();
-							}
-
-							private void downloadData() {
-
-								//下载数据
-								SyncReference WDdata = WilddogSync.getInstance().getReference(counturl);
-								Query wddata = WDdata.limitToLast(countdata);
-								wddata.addChildEventListener(new ChildEventListener() {
-									@Override
-									public void onChildAdded(com.wilddog.client.DataSnapshot snapshot, String previousChildName) {
-										Map bean = (Map) snapshot.getValue();
-										photos.add((String) bean.get("imgaddress"));
-										image_gridView.setAdapter(new GridViewImageAdapter(SearchAcitivity.this, photos, 320, 320));
-									}
-
-
-									@Override
-									public void onChildChanged(com.wilddog.client.DataSnapshot snapshot, String previousChildName) {
-
-									}
-
-									@Override
-									public void onChildRemoved(com.wilddog.client.DataSnapshot snapshot) {
-
-									}
-
-									@Override
-									public void onChildMoved(com.wilddog.client.DataSnapshot snapshot, String previousChildName) {
-
-									}
-
-									@Override
-									public void onCancelled(SyncError error) {
-
-									}
-								});
-								System.out.println("zhixing...");
-							}
-
-							@Override
-							public void onCancelled(SyncError error) {
-							}
-						});
-					}else {
-						//Wilddog版
-						SyncReference count = WilddogSync.getInstance().getReference(counturl);
-						count.addValueEventListener(new com.wilddog.client.ValueEventListener() {
-							@Override
-							public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-								long count = snapshot.getChildrenCount();
-								a = new String[(int) count - 1];
-								for (int i = 0; i < a.length; i++) {
-									int p = i + 1;
-									a[i] = url + p;
-									SyncReference imgaddress = WilddogSync.getInstance().getReference(a[i]);
-									final int finalI = i;
-									imgaddress.addValueEventListener(new com.wilddog.client.ValueEventListener() {
-										@Override
-										public void onDataChange(com.wilddog.client.DataSnapshot snapshot) {
-											Map bean = (Map) snapshot.getValue();
-											photos.add((String) bean.get("imgaddress"));
-											image_gridView.setAdapter(new GridViewImageAdapter(SearchAcitivity.this, photos, 320, 320));
-
-											if (finalI == a.length - 1) {
-												Toast.makeText(SearchAcitivity.this, "搜索成功", Toast.LENGTH_SHORT)
-														.show();
-											}
-										}
-
-										@Override
-										public void onCancelled(SyncError error) {
-
-										}
-									});
-								}
-							}
-
-							@Override
-							public void onCancelled(SyncError error) {
-
-							}
-						});
+				storeRef.orderByKey().startAt(str).endAt(str+"\uf8ff").limitToFirst(6)
+						.addValueEventListener(new ValueEventListener() {
+					@Override
+					public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+						grid.clear();
+						urlList.clear();
+						for (DataSnapshot storeSnapshot : dataSnapshot.getChildren()) {
+							Map<String, String> bean = (Map) storeSnapshot.getValue();
+							Map<String, String> map = new HashMap<String, String>();
+							map.put("textlogo", bean.get("title"));
+							map.put("imgAddress", bean.get("titlelogo"));
+							urlList.add(storeRef.getKey()+'/' +storeSnapshot.getKey());
+							grid.add(map);
+							image_gridView.setAdapter(new HomeGridAdapter(grid, SearchAcitivity.this));
+						}
 					}
-				}
+
+					@Override
+					public void onCancelled(@NonNull DatabaseError databaseError) {
+
+					}
+				});
 
 				//        单点事件
 				image_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//						Intent in = new Intent();
-//						in.setClass(SearchAcitivity.this, MaxPictureActivity.class);
-//						in.putExtra("pos", i);//必传项,i为当前点击的位置
-//						in.putStringArrayListExtra("imageAddress", photos);//必传项,photos为要显示的图片地址集合
-//						startActivity(in);
-						PhotoPreview.builder()
-								.setPhotos(photos)
-								.setCurrentItem(i)
-								.setShowDeleteButton(false)
-								.start(SearchAcitivity.this);
+						Intent in = new Intent();
+						in.setClass(SearchAcitivity.this, Coupon_ListActivity.class);
+						in.putExtra("url", urlList.get(i));//必传项,i为当前点击的位置
+						startActivity(in);
+//						PhotoPreview.builder()
+//								.setPhotos(grid)
+//								.setCurrentItem(i)
+//								.setShowDeleteButton(false)
+//								.start(SearchAcitivity.this);
 
 					}
 				});
 				/**
 				 *  MainActivity.this:为当前界面上下文
-				 *  photos:photos为要显示的图片地址集合
+				 *  grid:photos为要显示的图片地址集合
 				 * */
 
 				return false;
