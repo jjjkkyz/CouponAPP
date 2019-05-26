@@ -2,7 +2,6 @@ package com.edu.pu.cs.couponapp.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -89,7 +88,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
 
     private boolean isRefresh = false;
 
-    private String detailsimgOrnot;
+    private String detailsImages;
 
     Context context;
 
@@ -121,9 +120,8 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         content = getIntent().getStringExtra("content");
         directory = getIntent().getStringExtra("directory");
         TitleLogo = getIntent().getStringExtra("TitleLogo");
-        map = getIntent().getStringExtra("map");
         listorgrid = getIntent().getStringExtra("listorgrid");
-        detailsimgOrnot = getIntent().getStringExtra("detailsimgOrnot");
+        detailsImages = getIntent().getStringExtra("detailsImages");
 
         System.out.println(TitleLogo + "-----------titlelogo");
 
@@ -156,6 +154,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
         Btn_like.setIconResource("\uf08a");
 //        }
+
         System.out.println(isLikeOrNot + "---------islikeornot");
         Btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,15 +199,13 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         textView.setText(title);
         textView2.setText(Html.fromHtml(content));
 //      再次读取图片detailsimg
-        System.out.println(detailsimgOrnot + "------detailsimgOrnot");
-        if (detailsimgOrnot.equals("nul")) {
+        System.out.println(detailsImages + "------detailsImages");
+        if (detailsImages == null) {
             imgList.add(imgAddress);
-            System.out.println("imgList=" + imgList.toString());
         } else {
-            String[] temp = detailsimgOrnot.split("[|]");
+            String[] temp = detailsImages.split("[|]");
             for (int i = 0; i < temp.length; i++) {
                 imgList.add(temp[i]);
-                System.out.println(imgList.get(i) + "-------imgList[" + i + "]");
             }
 
         }

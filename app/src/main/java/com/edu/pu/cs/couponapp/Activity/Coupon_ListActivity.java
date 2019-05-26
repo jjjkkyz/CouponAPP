@@ -112,34 +112,20 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
 
         getStringValue(url+"/list");
         //        获取数据后，在这里点击就会把标题图片和内容传递过去，这里前提是你得保证有数据
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-////                判断集合里边是否有数据
-//                if (titleList.size() == 0 || imgAddressList.size() == 0 || ContentList.size() == 0) {
-//                    Toast.makeText(Coupon_ListActivity.this, "获取数据失败...", Toast.LENGTH_SHORT).show();
-//                } else {
-////                    其实这两个判断可以和在一起，但是我现在我没法测试，所以我就没和，这样比较保险，后期有时间你和起来就行
-////                    判断集合中获取出来的某个数据是否为空字符串
-//                    if (!titleList.get(i).equals("") || !imgAddressList.get(i).equals("") || !ContentList.get(i).equals("")) {
-//                        Intent in = new Intent(Coupon_ListActivity.this, DetailsActivity.class);
-//                        in.putExtra("title", titleList.get(i));
-//                        in.putExtra("imgAddress", imgAddressList.get(i));
-//                        in.putExtra("content", ContentList.get(i));
-//                        in.putExtra("TitleLogo", TitleLogo);
-//                        in.putExtra("map", map);
-//                        in.putExtra("listorgrid", listorgrid);
-//                        in.putExtra("detailsimgOrnot", DetailsimgList.get(i));
-//                        startActivity(in);
-//
-//
-//                    } else {
-//                        Toast.makeText(Coupon_ListActivity.this, "获取数据失败...", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                判断集合里边是否有数据
+                Intent in = new Intent(Coupon_ListActivity.this, DetailsActivity.class);
+                in.putExtra("title", list.get(i).get("title"));
+                in.putExtra("imgAddress", list.get(i).get("imaAddress"));
+                in.putExtra("content", list.get(i).get("content"));
+                in.putExtra("TitleLogo", TitleLogo);
+                in.putExtra("listorgrid", listorgrid);
+                in.putExtra("detailsImages", list.get(i).get("detailsImages"));
+                startActivity(in);
+            }
+        });
         dialog5.cancel();
     }
 
@@ -154,16 +140,12 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //Getting the data from snapshot
                     Bean bean = postSnapshot.getValue(Bean.class);
-                    System.out.print("content=" + bean.getContent());
-                    System.out.print("||");
-                    System.out.print("imgaddress=" + bean.getImgaddress());
-                    System.out.print("||");
-                    System.out.print("title=" + bean.getTitle());
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("title", bean.getTitle());
                     map.put("content", bean.getContent());
                     map.put("imgAddress", bean.getImgaddress());
                     map.put("dateover", "1");
+                    map.put("detailsImages", bean.getDetailsimg());
                     list.add(map);
 
                 }
