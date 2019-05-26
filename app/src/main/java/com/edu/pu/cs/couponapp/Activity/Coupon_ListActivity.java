@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -14,11 +15,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.navi.model.NaviLatLng;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.edu.pu.cs.couponapp.Adapter.ListAdapter;
 
 import com.edu.pu.cs.couponapp.Bean.Bean;
+import com.edu.pu.cs.couponapp.Bean.Shop;
 import com.edu.pu.cs.couponapp.R;
 import com.edu.pu.cs.couponapp.ToastUtils;
 import com.github.anzewei.parallaxbacklayout.ParallaxActivityBase;
@@ -75,7 +82,12 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
     private long servertimestamp;
     private String DateOver;
 
-    private int countdata;
+    private double longitude;
+    private double latitude;
+    private AMapLocationClient mLocationClient;
+    private AMapLocationClientOption mLocationOption;
+    private AMapLocationListener mLocationListener;
+    private AMapLocation mCurrentLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,15 +105,16 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
 
 
         String url = getIntent().getStringExtra("url");
-        //获取顶部logo
-        TitleLogo = url + "/titlelogo";
-        mFirebaselogo = FirebaseDatabase.getInstance().getReference(TitleLogo);
+        //获取顶部logo和经纬度
+        mFirebaselogo = FirebaseDatabase.getInstance().getReference(url);
         mFirebaselogo.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String logo = dataSnapshot.getValue(String.class);
-                Glide.with(Coupon_ListActivity.this).load(logo).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().thumbnail(0.1f).error(com.example.gridviewimage.R.mipmap.image_error).into(titlelogo);
-                TitleLogo = logo;
+                Shop shop = dataSnapshot.getValue(Shop.class);
+                Glide.with(Coupon_ListActivity.this).load(shop.getTitlelogo()).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().thumbnail(0.1f).error(com.example.gridviewimage.R.mipmap.image_error).into(titlelogo);
+                TitleLogo = shop.getTitlelogo();
+                latitude = shop.getLatitude();
+                longitude = shop.getLongitude();
             }
             @Override
             public void onCancelled(DatabaseError firebaseError) {}
@@ -161,13 +174,32 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
     }
 
     public void gomap(View v) {
-        if (checkPackage("com.baidu.BaiduMap")) {
-            Intent intent = new Intent();
-//            intent.setData(Uri.parse("baidumap://map/place/search?query="+map));
-            startActivity(intent);
-        }else {
-            ToastUtils.showShortToast(mContext,"请先安装百度地图~");
-        }
+        mLocationOption = new AMapLocationClientOption();
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setOnceLocation(true);
+        mLocationClient = new AMapLocationClient(this.getApplicationContext());
+        mLocationListener = new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                if (aMapLocation != null) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        mCurrentLocation = aMapLocation;
+                    }else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        Log.e("AmapError","location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+                    }
+                }
+            }
+        };
+        mLocationClient.setLocationListener(mLocationListener);
+        mLocationClient.startLocation();
+        Intent intent = new Intent(this, RouteNaviActivity.class);
+        intent.putExtra("gps", false);
+        intent.putExtra("start", new NaviLatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
+        intent.putExtra("end", new NaviLatLng(latitude, longitude));
+        startActivity(intent);
     }
 
     public void backbtn(View v) {

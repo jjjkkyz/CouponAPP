@@ -1,9 +1,11 @@
 package com.edu.pu.cs.couponapp.Bean;
 
-public class Business {
+public class Shop {
     private String abbreviation;
     private String title;
     private String titlelogo;
+    private double latitude;
+    private double longitude;
 
     public String getAbbreviation() {
         return abbreviation;
@@ -27,5 +29,21 @@ public class Business {
 
     public void setTitlelogo(String titlelogo) {
         this.titlelogo = titlelogo;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }
