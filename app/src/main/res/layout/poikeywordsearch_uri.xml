@@ -37,6 +37,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/title"
-        android:background="@drawable/start_uri" />
+        android:background="@drawable/info" />
 
 </RelativeLayout>
