@@ -95,7 +95,7 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_couponlist);
         StatusBarCompat.setStatusBarColor(Coupon_ListActivity.this, getResources().getColor(R.color.background_color_blue));
-
+        initLocation();
         instance = this;
 
         final ProgressDialog dialog5 = ProgressDialog.show(this, "稍候片刻", "折价券即将呈现", true, true);
@@ -174,6 +174,22 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
     }
 
     public void gomap(View v) {
+        Intent intent = new Intent(this, RouteNaviActivity.class);
+        intent.putExtra("gps", false);
+        intent.putExtra("start", new NaviLatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
+        intent.putExtra("end", new NaviLatLng(latitude, longitude));
+        startActivity(intent);
+    }
+
+    public void backbtn(View v) {
+        finish();
+    }
+
+
+    /**
+     * 初始化定位
+     */
+    private void initLocation() {
         mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setOnceLocation(true);
@@ -195,15 +211,6 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
         };
         mLocationClient.setLocationListener(mLocationListener);
         mLocationClient.startLocation();
-        Intent intent = new Intent(this, RouteNaviActivity.class);
-        intent.putExtra("gps", false);
-        intent.putExtra("start", new NaviLatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
-        intent.putExtra("end", new NaviLatLng(latitude, longitude));
-        startActivity(intent);
-    }
-
-    public void backbtn(View v) {
-        finish();
     }
 
 
