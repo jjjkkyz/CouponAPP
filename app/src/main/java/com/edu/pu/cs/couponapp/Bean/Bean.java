@@ -1,16 +1,6 @@
 package com.edu.pu.cs.couponapp.Bean;
 
-/**
- * Created by Kate on 2016/10/27.
- */
 public class Bean {
-
-    /**
-     * content : 優惠區域: 全台
-     優惠日期: 2016-09-13 ~ 2016-10-31
-     * imgaddress : https://firebasestorage.googleapis.com/v0/b/coupon-ed7bf.appspot.com/o/Coupon_KFC%2Fkfc_1.jpg?alt=media&token=8d3ca643-a126-487c-9617-a370aac9cd28
-     * title : 肯德基A好康優惠券 9/13~10/31
-     */
 
     private String content;
     private String imgaddress;
