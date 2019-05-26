@@ -119,7 +119,7 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
                 in.putExtra("content", list.get(i).get("content"));
                 in.putExtra("TitleLogo", TitleLogo);
                 in.putExtra("listorgrid", listorgrid);
-                in.putExtra("detailsImage", list.get(i).get("detailsImage"));
+                in.putExtra("detailsImages", list.get(i).get("detailsImages"));
                 startActivity(in);
             }
         });

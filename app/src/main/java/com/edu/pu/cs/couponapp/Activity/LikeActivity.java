@@ -2,6 +2,7 @@ package com.edu.pu.cs.couponapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -26,9 +27,21 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.edu.pu.cs.couponapp.Bean.Bean;
 import com.edu.pu.cs.couponapp.R;
 import com.edu.pu.cs.couponapp.overlay.PoiOverlay;
 import com.edu.pu.cs.couponapp.util.Utils;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LikeActivity extends AppCompatActivity implements AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnInfoWindowClickListener, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter {
     private AMap mMap;
@@ -39,6 +52,13 @@ public class LikeActivity extends AppCompatActivity implements AMapLocationListe
     private Circle mLocationCircle;
     private PoiOverlay mPoiOverlay;
     private AMapLocation mCurrentLocation;
+
+    //Firebase实时数据库引用
+    DatabaseReference myRef;
+    DatabaseReference couponStore;
+
+    private PoiResult result;
+    private Map<String,String> snapshotMap=new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,9 +164,39 @@ public class LikeActivity extends AppCompatActivity implements AMapLocationListe
         if (mPoiOverlay != null) {
             mPoiOverlay.removeFromMap();
         }
-        mPoiOverlay = new PoiOverlay(mMap, poiResult.getPois());
-        mPoiOverlay.addToMap();
-        mPoiOverlay.zoomToSpan();
+        result=poiResult;
+
+        myRef = FirebaseDatabase.getInstance().getReference();
+        couponStore = myRef.child("coupon");
+        couponStore.addValueEventListener(new ValueEventListener() {
+              @Override
+              public void onDataChange(DataSnapshot dataSnapshot) {
+                  List<String> storeNameList=new ArrayList<>();
+                  for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                          Bean bean = postSnapshot.getValue(Bean.class);
+                          snapshotMap.put(postSnapshot.getKey(),bean.getTitle());
+                          //storeNameList.add(bean.getTitle());
+                  }
+                  List<PoiItem> poiItemList=new ArrayList<>();
+                  for(PoiItem item:result.getPois()){
+                      //从附近搜索到的店铺中去掉无优惠活动的
+                      for(String key:snapshotMap.keySet()){
+                          if(item.getTitle().contains(snapshotMap.get(key))){
+                              poiItemList.add(item);
+                          }
+                      }
+                  }
+                  mPoiOverlay = new PoiOverlay(mMap, poiItemList);
+                  mPoiOverlay.addToMap();
+                  mPoiOverlay.zoomToSpan();
+              }
+              @Override
+              public void onCancelled(@NonNull DatabaseError databaseError) {
+                  System.out.println("The read failed: " + databaseError.getMessage());
+              }
+          }
+        );
+
     }
 
     @Override
@@ -180,6 +230,27 @@ public class LikeActivity extends AppCompatActivity implements AMapLocationListe
                 null);
         TextView title = (TextView) view.findViewById(R.id.title);
         title.setText(marker.getTitle());
+
+        ImageButton detail_button = (ImageButton) view
+                .findViewById(R.id.go_store);
+        // 调店铺优惠页
+        detail_button.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             String value = "";
+             String name = "";
+             for (String key:snapshotMap.keySet()) {
+                 String title = snapshotMap.get(key);
+                 if (marker.getTitle().contains(title)) {
+                     name = name + title;
+                     value = value + "coupon/" + key;
+                     break;
+                 }
+             }
+             store_click(value,name);
+         }
+     }
+        );
 
         TextView snippet = (TextView) view.findViewById(R.id.snippet);
         int index = mPoiOverlay.getPoiIndex(marker);
@@ -217,6 +288,13 @@ public class LikeActivity extends AppCompatActivity implements AMapLocationListe
     @Override
     public View getInfoContents(Marker marker) {
         return null;
+    }
+
+    public void store_click(String value, String name) {
+        Intent it = new Intent(this, Coupon_ListActivity.class);
+        it.putExtra("url", value);
+        it.putExtra("map", name);
+        startActivity(it);
     }
 }
 
