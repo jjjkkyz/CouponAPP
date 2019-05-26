@@ -121,7 +121,6 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         content = getIntent().getStringExtra("content");
         directory = getIntent().getStringExtra("directory");
         TitleLogo = getIntent().getStringExtra("TitleLogo");
-        map = getIntent().getStringExtra("map");
         listorgrid = getIntent().getStringExtra("listorgrid");
         detailsimgOrnot = getIntent().getStringExtra("detailsimgOrnot");
 

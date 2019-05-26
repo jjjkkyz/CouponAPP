@@ -122,11 +122,10 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
 //                    判断集合中获取出来的某个数据是否为空字符串
                     if (!titleList.get(i).equals("") || !imgAddressList.get(i).equals("") || !ContentList.get(i).equals("")) {
                         Intent in = new Intent(Coupon_ListActivity.this, DetailsActivity.class);
-                        in.putExtra("title", titleList.get(i));
-                        in.putExtra("imgAddress", imgAddressList.get(i));
-                        in.putExtra("content", ContentList.get(i));
+                        in.putExtra("title", list.get(i).get("title"));
+                        in.putExtra("imgAddress", list.get(i).get("imaAddress"));
+                        in.putExtra("content", list.get(i).get("content"));
                         in.putExtra("TitleLogo", TitleLogo);
-                        in.putExtra("map", map);
                         in.putExtra("listorgrid", listorgrid);
                         in.putExtra("detailsimgOrnot", DetailsimgList.get(i));
                         startActivity(in);
