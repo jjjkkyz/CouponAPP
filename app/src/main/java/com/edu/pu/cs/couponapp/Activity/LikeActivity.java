@@ -27,7 +27,8 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
-import com.edu.pu.cs.couponapp.Bean.Bean;
+import com.edu.pu.cs.couponapp.Bean.Bound;
+import com.edu.pu.cs.couponapp.Bean.Shop;
 import com.edu.pu.cs.couponapp.R;
 import com.edu.pu.cs.couponapp.overlay.PoiOverlay;
 import com.edu.pu.cs.couponapp.util.Utils;
@@ -45,8 +46,8 @@ import java.util.Map;
 
 public class LikeActivity extends AppCompatActivity implements AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnInfoWindowClickListener, AMap.OnMarkerClickListener, AMap.InfoWindowAdapter {
     private AMap mMap;
-    private PoiSearch mPoiSearch;
     private AMapLocationClient mLocationClient;
+    private PoiSearch mPoiSearch;
     private AMapLocationClientOption mLocationOption;
     private Marker mLocationMarker;
     private Circle mLocationCircle;
@@ -59,6 +60,7 @@ public class LikeActivity extends AppCompatActivity implements AMapLocationListe
 
     private PoiResult result;
     private Map<String,String> snapshotMap=new HashMap<>();
+    private Bound bound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +158,9 @@ public class LikeActivity extends AppCompatActivity implements AMapLocationListe
         initPoiSearch(aMapLocation.getLatitude(), aMapLocation.getLongitude());
     }
 
+    /**
+     *  获取限定范围内的商铺
+     */
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
         if (i != AMapException.CODE_AMAP_SUCCESS || poiResult == null) {
@@ -164,29 +169,25 @@ public class LikeActivity extends AppCompatActivity implements AMapLocationListe
         if (mPoiOverlay != null) {
             mPoiOverlay.removeFromMap();
         }
-        result=poiResult;
+        //得到当前位置500米范围内的店铺
+        Double range=500.0;
+        bound=new Bound(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude(),range);
 
         myRef = FirebaseDatabase.getInstance().getReference();
         couponStore = myRef.child("coupon");
-        couponStore.addValueEventListener(new ValueEventListener() {
+        couponStore.orderByChild("longitude").startAt(bound.getLeftLo()).endAt(bound.getRightLo()).addValueEventListener(new ValueEventListener() {
               @Override
               public void onDataChange(DataSnapshot dataSnapshot) {
-                  List<String> storeNameList=new ArrayList<>();
+                  List<Shop> shopList=new ArrayList<>();
                   for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                          Bean bean = postSnapshot.getValue(Bean.class);
-                          snapshotMap.put(postSnapshot.getKey(),bean.getTitle());
-                          //storeNameList.add(bean.getTitle());
-                  }
-                  List<PoiItem> poiItemList=new ArrayList<>();
-                  for(PoiItem item:result.getPois()){
-                      //从附近搜索到的店铺中去掉无优惠活动的
-                      for(String key:snapshotMap.keySet()){
-                          if(item.getTitle().contains(snapshotMap.get(key))){
-                              poiItemList.add(item);
+                          Shop bean = postSnapshot.getValue(Shop.class);
+                          if(bean.getLatitude()>=bound.getBottomLa()&&bean.getLatitude()<=bound.getTopLa()){
+                              shopList.add(bean);
+                              snapshotMap.put(postSnapshot.getKey(),bean.getTitle());
                           }
-                      }
                   }
-                  mPoiOverlay = new PoiOverlay(mMap, poiItemList);
+                  LatLng currentLocation=new LatLng(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude());
+                  mPoiOverlay = new PoiOverlay(mMap, shopList,currentLocation);
                   mPoiOverlay.addToMap();
                   mPoiOverlay.zoomToSpan();
               }
@@ -297,4 +298,3 @@ public class LikeActivity extends AppCompatActivity implements AMapLocationListe
         startActivity(it);
     }
 }
-

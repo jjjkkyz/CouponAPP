@@ -1,6 +1,9 @@
 package com.edu.pu.cs.couponapp.overlay;
 
+import com.amap.api.location.CoordinateConverter;
+import com.amap.api.location.DPoint;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.LatLng;
@@ -8,6 +11,7 @@ import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.services.core.PoiItem;
+import com.edu.pu.cs.couponapp.Bean.Shop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +22,10 @@ import java.util.List;
  * @since V2.1.0
  */
 public class PoiOverlay {
-    private List<PoiItem> mPois;
+    private List<Shop> mPois;
     private AMap mAMap;
     private ArrayList<Marker> mPoiMarks = new ArrayList<Marker>();
+    private LatLng centralLocation;
 
     /**
      * 通过此构造函数创建Poi图层。
@@ -29,9 +34,10 @@ public class PoiOverlay {
      * @param pois 要在地图上添加的poi。列表中的poi对象详见搜索服务模块的基础核心包（com.amap.api.services.core）中的类<strong> <a href="../../../../../../Search/com/amap/api/services/core/PoiItem.html" title="com.amap.api.services.core中的类">PoiItem</a></strong>。
      * @since V2.1.0
      */
-    public PoiOverlay(AMap amap, List<PoiItem> pois) {
+    public PoiOverlay(AMap amap, List<Shop> pois, LatLng currentLocation) {
         mAMap = amap;
         mPois = pois;
+        centralLocation=currentLocation;
     }
 
     /**
@@ -73,8 +79,8 @@ public class PoiOverlay {
                 if (mAMap == null)
                     return;
                 if (mPois.size() == 1) {
-                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mPois.get(0).getLatLonPoint().getLatitude(),
-                            mPois.get(0).getLatLonPoint().getLongitude()), 18f));
+                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mPois.get(0).getLatitude(),
+                            mPois.get(0).getLongitude()), 18f));
                 } else {
                     LatLngBounds bounds = getLatLngBounds();
                     mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5));
@@ -88,8 +94,8 @@ public class PoiOverlay {
     private LatLngBounds getLatLngBounds() {
         LatLngBounds.Builder b = LatLngBounds.builder();
         for (int i = 0; i < mPois.size(); i++) {
-            b.include(new LatLng(mPois.get(i).getLatLonPoint().getLatitude(),
-                    mPois.get(i).getLatLonPoint().getLongitude()));
+            b.include(new LatLng(mPois.get(i).getLatitude(),
+                    mPois.get(i).getLongitude()));
         }
         return b.build();
     }
@@ -97,9 +103,7 @@ public class PoiOverlay {
     private MarkerOptions getMarkerOptions(int index) {
         return new MarkerOptions()
                 .position(
-                        new LatLng(mPois.get(index).getLatLonPoint()
-                                .getLatitude(), mPois.get(index)
-                                .getLatLonPoint().getLongitude()))
+                        new LatLng(mPois.get(index).getLatitude(), mPois.get(index).getLongitude()))
                 .title(getTitle(index)).snippet(getSnippet(index))
                 .icon(getBitmapDescriptor(index));
     }
@@ -127,18 +131,29 @@ public class PoiOverlay {
     }
 
     /**
+     * 返回第index的Marker的经纬度。
+     * @param index
+     * @return
+     */
+    protected LatLng getLatlng(int index) {
+        LatLng point=new LatLng(mPois.get(index).getLatitude(),mPois.get(index).getLongitude());
+        return point;
+    }
+
+
+    /**
      * 返回第index的Marker的详情。
      *
      * @param index 第几个Marker。
      * @return marker的详情。
      * @since V2.1.0
      */
-    protected String getSnippet(int index) {
-        return mPois.get(index).getSnippet();
+    public String getSnippet(int index) {
+        return mPois.get(index).getAddress();
     }
 
     public float getDistance(int index) {
-        return mPois.get(index).getDistance();
+        return AMapUtils.calculateLineDistance(getLatlng(index),centralLocation);
     }
 
     /**
@@ -164,10 +179,10 @@ public class PoiOverlay {
      * @return poi的信息。poi对象详见搜索服务模块的基础核心包（com.amap.api.services.core）中的类 <strong><a href="../../../../../../Search/com/amap/api/services/core/PoiItem.html" title="com.amap.api.services.core中的类">PoiItem</a></strong>。
      * @since V2.1.0
      */
-    public PoiItem getPoiItem(int index) {
-        if (index < 0 || index >= mPois.size()) {
-            return null;
-        }
-        return mPois.get(index);
-    }
+//    public PoiItem getPoiItem(int index) {
+//        if (index < 0 || index >= mPois.size()) {
+//            return null;
+//        }
+//        return mPois.get(index);
+//    }
 }
