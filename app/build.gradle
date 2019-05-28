@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 26
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
@@ -49,8 +49,8 @@ android {
     }
     defaultConfig {
         applicationId "com.edu.pu.cs.couponapp"
-        minSdkVersion 19
-        targetSdkVersion 24
+        minSdkVersion 21
+        targetSdkVersion 26
         versionCode 1
         versionName "v1.0.1 build0304"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -73,7 +73,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.android.support:appcompat-v7:24.2.1'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
     implementation 'com.google.firebase:firebase-appindexing:18.0.0'
     testImplementation 'junit:junit:4.12'
@@ -85,7 +86,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:17.0.0'
 
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'com.android.support:support-v4:24.2.1'
+    implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
     implementation 'me.xiaopan:sketch:2.3.0-beta7'
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
@@ -96,8 +97,8 @@ dependencies {
     implementation 'com.github.niorgai:StatusBarCompat:2.0.0'
     implementation 'com.zhy:autolayout:1.4.5'
     implementation 'me.iwf.photopicker:PhotoPicker:0.9.0@aar'
-    implementation 'com.android.support:recyclerview-v7:24.2.1'
-    implementation 'com.android.support:design:24.2.1'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.github.anzewei:parallaxbacklayout:0.5'
     //PushSDK必须依赖基础组件库，所以需要加入对应依赖

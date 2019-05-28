@@ -204,6 +204,8 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
         //加载商家Logo和名称，以及点击事件
         getStringValue2();
 
+        Intent it = new Intent(this, PermissionActivity.class);
+        startActivity(it);
 
 
 
