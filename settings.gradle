@@ -1,1 +1,1 @@
-include ':app', ':gridviewimage'
+include ':app', ':gridviewimage', ':translate_library'

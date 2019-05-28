@@ -112,7 +112,7 @@ dependencies {
     implementation 'com.amap.api:navi-3dmap:latest.integration'
     implementation 'com.amap.api:location:latest.integration'
     implementation 'com.amap.api:search:latest.integration'
-
+    implementation(project(path: ':translate_library')){transitive=false;}
 
 
 }

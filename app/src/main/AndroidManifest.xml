@@ -28,6 +28,7 @@
 
 
     <application
+        tools:replace="android:icon"
         android:name=".FireCoupon"
         android:icon="@drawable/icon"
         android:theme="@style/AppTheme"
@@ -51,6 +52,7 @@
         <activity android:name=".Activity.DetailsActivity" />
         <activity android:name=".Activity.Coupon_GridActivity" />
         <activity android:name=".Activity.Coupon_ListActivity" />
+        <activity android:name=".Activity.PermissionActivity" />
 
         <activity
             android:name=".Activity.LikeActivity"
@@ -107,7 +109,7 @@
         </meta-data>
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="4d308de97fc4615e34ec20c74b7e5bf1" />
+            android:value="cf84838cc49b9e0f9dfacdb27a1cf457" />
         <service android:name="com.amap.api.location.APSService"></service>
 
     </application>

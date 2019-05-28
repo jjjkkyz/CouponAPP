@@ -95,6 +95,8 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent it = new Intent(this, PermissionActivity.class);
+        startActivity(it);
         myRef = FirebaseDatabase.getInstance().getReference();
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        setBackEnable(false);
@@ -204,8 +206,6 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
         //加载商家Logo和名称，以及点击事件
         getStringValue2();
 
-        Intent it = new Intent(this, PermissionActivity.class);
-        startActivity(it);
 
 
 

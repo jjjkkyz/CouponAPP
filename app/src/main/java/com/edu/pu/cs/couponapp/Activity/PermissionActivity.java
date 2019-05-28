@@ -23,8 +23,7 @@ public class PermissionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.home);
-
+        setContentView(R.layout.origin);
         myRequetPermission();
     }
 
@@ -33,6 +32,7 @@ public class PermissionActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
         }else {
             Toast.makeText(this,"已开启定位权限",Toast.LENGTH_SHORT).show();
+            PermissionActivity.this.finish();
         }
     }
 
@@ -44,6 +44,7 @@ public class PermissionActivity extends AppCompatActivity {
             for (int i = 0; i < permissions.length; i++) {
                 if (grantResults[i] == PERMISSION_GRANTED) {//选择了“始终允许”
                     Toast.makeText(this, "" + "权限" + permissions[i] + "申请成功", Toast.LENGTH_SHORT).show();
+                    PermissionActivity.this.finish();
                 } else {
                     if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i])){//用户选择了禁止不再询问
 
