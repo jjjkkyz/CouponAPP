@@ -55,7 +55,7 @@ android {
         versionName "v1.0.1 build0304"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-
+        resConfigs "en"
 
     }
     buildTypes {
@@ -109,6 +109,12 @@ dependencies {
     implementation 'com.umeng.umsdk:push:5.0.2'
     implementation 'com.wilddog.client:wilddog-sync-android:2.2.0'
 
+    implementation "com.google.firebase:firebase-auth:17.0.0"
+    implementation "com.google.android.gms:play-services-auth:16.0.1"
+
+    implementation "com.android.support:design:26.1.0"
+    implementation "com.android.support:customtabs:26.1.0"
+    implementation "com.android.support:cardview-v7:26.1.0"
     implementation 'com.amap.api:navi-3dmap:latest.integration'
     implementation 'com.amap.api:location:latest.integration'
     implementation 'com.amap.api:search:latest.integration'
