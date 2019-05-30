@@ -33,6 +33,7 @@ import com.edu.pu.cs.couponapp.R;
 import com.edu.pu.cs.couponapp.VibratorHelper;
 import com.edu.pu.cs.couponapp.ui.TabShow;
 
+import com.example.wangan.myapplication.Translate;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackActivityHelper;
 import com.github.anzewei.parallaxbacklayout.ParallaxBackLayout;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -52,6 +53,7 @@ import qiu.niorgai.StatusBarCompat;
 public class DetailsActivity extends AutoLayoutActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
     private String title, imgAddress, content, directory, TitleLogo;
     private FancyButton Btn_like;
+    private Button translateButton;
     private String[] a = new String[10];
     //图片listview
 
@@ -61,6 +63,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
     ArrayList<String> likeornot = new ArrayList<String>();
     TextView textView;
     TextView textView2;
+    TextView shareTextView;
     SQLiteDatabase db;
     String db_name = "coupon";
     String tb_like_name = "like";
@@ -87,6 +90,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
     private AlertDialog.Builder dialogBuilder;
 
     private boolean isRefresh = false;
+    private boolean isEnglish = false;
 
     private String detailsImages;
 
@@ -125,6 +129,17 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
 
         System.out.println(TitleLogo + "-----------titlelogo");
 
+        translateButton = (Button) findViewById(R.id.button);
+        translateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isEnglish){
+                    Translate translate = new Translate();
+//                    shareTextView.setText(translate.translate("Want to share offers with friends?"));
+                    shareTextView.setText("Would you like to share the discount with your friends? Shake it right away. ~Share it as quickly as you want, depending on the content or pictures you want to share.");
+                }
+            }
+        });
         Btn_like = (FancyButton) findViewById(R.id.btn_like);
 
 
@@ -140,26 +155,6 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         Btn_like.setIconResource("\uf08a");
 //        }
 
-        System.out.println(isLike + "---------isLike");
-        Btn_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isLike) {
-                    Btn_like.setText("移出周边");
-                    Btn_like.setBackgroundColor(Color.parseColor("#00a0f0"));
-                    Btn_like.setFocusBackgroundColor(Color.parseColor("#0fafff"));
-                    Btn_like.setIconResource("\uf00d");
-                    isLike = true;
-                } else if (isLike) {
-                    Btn_like.setText("加入周边");
-                    Btn_like.setBackgroundColor(Color.parseColor("#ea5413"));
-                    Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
-                    Btn_like.setIconResource("\uf08a");
-                    isLike = false;
-                }
-
-            }
-        });
 
 
 //      把传递过来的title和content加载到预设的textview里面
@@ -318,6 +313,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         textView2 = (TextView) findViewById(R.id.textView2);
         titlelogo = (ImageView) findViewById(R.id.titlelogo);
         Sharebtn = (Button) findViewById(R.id.share);
+        shareTextView = (TextView) findViewById(R.id.textView3);
         //imageView = (SketchImageView) findViewById(R.id.imageView);
 
 
@@ -369,7 +365,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
             Field field = popup.getClass().getDeclaredField("mPopup");
             field.setAccessible(true);
             MenuPopupHelper mHelper = (MenuPopupHelper) field.get(popup);
-//            mHelper.setForceShowIcon(true);
+            mHelper.setForceShowIcon(true);
         } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
@@ -459,4 +455,20 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         scrollToFinishActivity();
     }
 
+    public void addLike(View view) {
+        if (!isLike) {
+            Btn_like.setText("优惠券已使用");
+            Btn_like.setBackgroundColor(Color.parseColor("#00a0f0"));
+            Btn_like.setFocusBackgroundColor(Color.parseColor("#0fafff"));
+            Btn_like.setIconResource("\uf00d");
+            isLike = true;
+        } else if (isLike) {
+            Btn_like.setText("使用优惠券");
+            Btn_like.setBackgroundColor(Color.parseColor("#ea5413"));
+            Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
+            Btn_like.setIconResource("\uf08a");
+            isLike = false;
+        }
+
+    }
 }

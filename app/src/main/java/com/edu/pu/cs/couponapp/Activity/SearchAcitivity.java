@@ -144,7 +144,7 @@ public class SearchAcitivity extends AutoLayoutActivity {
 					}
 				});
 				/**
-				 *  MainActivity.this:为当前界面上下文
+				 *  Translate.this:为当前界面上下文
 				 *  grid:photos为要显示的图片地址集合
 				 * */
 

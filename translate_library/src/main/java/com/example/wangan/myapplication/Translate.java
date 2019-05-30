@@ -20,20 +20,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class Translate {
     public String str2="";
     //json组件
     JSONObject jo;
     JSONArray ja;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Log.e("EEEEEEEEE_______",translate("你好"));
 
-    }
-
-    private String translate(final String word){
+    public String translate(final String word){
         new Thread() {
             public void run() {
                 try {

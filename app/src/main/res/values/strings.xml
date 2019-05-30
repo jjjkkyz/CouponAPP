@@ -4,10 +4,11 @@
     <string name="search_input">请输入查询内容</string>
     <string name="app_name">惠券在握</string>
     <string name="detail_notice">优惠详情及注意事项</string>
-    <string name="shake2share">想和朋友一起分享优惠吗，马上摇一摇吧~\n长按你想分享的内容或图片，同样可快速分享喔！</string>
+    <string name="shake2share">想和朋友一起分享优惠吗，马上摇一摇吧~长按你想分享的内容或图片，同样可快速分享喔！</string>
 
     <string name="text_appname">惠券在握</string>
     <string name="update">版本更新</string>
+
     <string name="update_1">当前为最新版本</string>
     <string name="feed">问题与建议反馈</string>
     <string name="shareapp">分享惠券在握</string>
