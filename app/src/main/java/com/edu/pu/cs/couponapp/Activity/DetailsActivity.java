@@ -65,7 +65,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
     String db_name = "coupon";
     String tb_like_name = "like";
     ImageView titlelogo;
-    private boolean isLikeOrNot;
+    private boolean isLike;
     //others
     private Button Others;
     private Button Sharebtn;
@@ -132,64 +132,31 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         //加载顶部Logo
         Glide.with(DetailsActivity.this).load(TitleLogo).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().thumbnail(0.1f).error(com.example.gridviewimage.R.mipmap.image_error).into(titlelogo);
 
-//        db = openOrCreateDatabase(db_name, Context.MODE_PRIVATE, null);
-//        Cursor cursor = null;
-//        cursor = db.rawQuery("select * from like where directory = '" + directory + "'", null);
-//        while (cursor.moveToNext()) {
-//            likeornot.add(cursor.getString(cursor.getColumnIndex("directory")));
-//            System.out.println(cursor.getString(cursor.getColumnIndex("directory")) + "-----directory");
-//            //可以将数据set-》实体类对象集合->add到集合
-//        }
-//        System.out.println(likeornot.size() + "----------sizq");
-//        if (likeornot.size() == 1) {
-//            isLikeOrNot = true;
-//            Btn_like.setText("移出周边");
-//            Btn_like.setBackgroundColor(Color.parseColor("#00a0f0"));
-//            Btn_like.setFocusBackgroundColor(Color.parseColor("#0fafff"));
-//            Btn_like.setIconResource("\uf00d");
-//        } else {
-        isLikeOrNot = false;
+
+        isLike = false;
         Btn_like.setText("使用优惠券");
         Btn_like.setBackgroundColor(Color.parseColor("#ea5413"));
         Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
         Btn_like.setIconResource("\uf08a");
 //        }
 
-        System.out.println(isLikeOrNot + "---------islikeornot");
+        System.out.println(isLike + "---------isLike");
         Btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (isLikeOrNot == false) {
-//                    db = openOrCreateDatabase(db_name, Context.MODE_PRIVATE, null);
-//                    //String createTable = "CREATE TABLE IF NOT EXISTS " + tb_like_name + "(_id integer primary key autoincrement,directory TEXT)";
-//                    //db.execSQL(createTable);
-//                    String insert = "insert into like (directory,map) values('" + directory + "','" + map + "')";
-//                    db.execSQL(insert);
-//                    Cursor cursor = null;
-//                    cursor = db.rawQuery("Select directory from like", null);
-//                    while (cursor.moveToNext()) {
-//                        System.out.println(cursor.getString(cursor.getColumnIndex("directory")) + "---jiaruyoumeiyouchengg");
-//                    }
-//                    Btn_like.setText("移出周边");
-//                    Btn_like.setBackgroundColor(Color.parseColor("#00a0f0"));
-//                    Btn_like.setFocusBackgroundColor(Color.parseColor("#0fafff"));
-//                    Btn_like.setIconResource("\uf00d");
-//                    isLikeOrNot = true;
-//                } else if (isLikeOrNot == true) {
-//                    db = openOrCreateDatabase(db_name, Context.MODE_PRIVATE, null);
-//                    String del = "delete from like where directory = '" + directory + "'";
-//                    db.execSQL(del);
-//                    Cursor cursor = null;
-//                    cursor = db.rawQuery("Select directory from like", null);
-//                    while (cursor.moveToNext()) {
-//                        System.out.println(cursor.getString(cursor.getColumnIndex("directory")) + "---shanchuyoumeiyouchengg");
-//                    }
-//                    Btn_like.setText("加入周边");
-//                    Btn_like.setBackgroundColor(Color.parseColor("#ea5413"));
-//                    Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
-//                    Btn_like.setIconResource("\uf08a");
-//                    isLikeOrNot = false;
-//                }
+                if (!isLike) {
+                    Btn_like.setText("移出周边");
+                    Btn_like.setBackgroundColor(Color.parseColor("#00a0f0"));
+                    Btn_like.setFocusBackgroundColor(Color.parseColor("#0fafff"));
+                    Btn_like.setIconResource("\uf00d");
+                    isLike = true;
+                } else if (isLike) {
+                    Btn_like.setText("加入周边");
+                    Btn_like.setBackgroundColor(Color.parseColor("#ea5413"));
+                    Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
+                    Btn_like.setIconResource("\uf08a");
+                    isLike = false;
+                }
 
             }
         });
@@ -402,7 +369,7 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
             Field field = popup.getClass().getDeclaredField("mPopup");
             field.setAccessible(true);
             MenuPopupHelper mHelper = (MenuPopupHelper) field.get(popup);
-            mHelper.setForceShowIcon(true);
+//            mHelper.setForceShowIcon(true);
         } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }

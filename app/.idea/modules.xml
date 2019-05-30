@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../CouponAPP.iml" filepath="$PROJECT_DIR$/../CouponAPP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app.iml" filepath="$PROJECT_DIR$/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gridviewimage/gridviewimage.iml" filepath="$PROJECT_DIR$/../gridviewimage/gridviewimage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../translate_library/translate_library.iml" filepath="$PROJECT_DIR$/../translate_library/translate_library.iml" />
+    </modules>
+  </component>
+</project>

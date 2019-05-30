@@ -28,7 +28,7 @@ public class OriginActivity extends AutoLayoutActivity {
     class lunchhandler implements Runnable{
 
         public void run() {
-            startActivity(new Intent(getApplication(),TabShow.class));
+            startActivity(new Intent(getApplication(),EmailPasswordActivity.class));
             OriginActivity.this.finish();
         }
 

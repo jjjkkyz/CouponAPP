@@ -4,10 +4,14 @@ package com.edu.pu.cs.couponapp.Activity;
  * Created by Administrator on 2016/11/12.
  */
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.edu.pu.cs.couponapp.R;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -20,7 +24,37 @@ import java.lang.reflect.Field;
 public abstract class BaseActivity extends AutoLayoutActivity implements SlidingPaneLayout.PanelSlideListener {
 
     public final static String TAG = BaseActivity.class.getCanonicalName();
+    @VisibleForTesting
+    public ProgressDialog mProgressDialog;
 
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    public void hideKeyboard(View view) {
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideProgressDialog();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         initSwipeBackFinish();

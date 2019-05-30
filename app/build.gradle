@@ -36,6 +36,14 @@ android {
 
 
     }
+    signingConfigs{
+        debug{
+            keyAlias 'Key0'
+            keyPassword '123456'
+            storeFile file('key.jks')
+            storePassword '123456'
+        }
+    }
     lintOptions {
         checkReleaseBuilds false
         abortOnError false

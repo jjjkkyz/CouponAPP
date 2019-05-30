@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: me.xiaopan:sketch:2.3.0-beta7@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7775aab72ba3d482c068c074d75098e9/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7775aab72ba3d482c068c074d75098e9/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.xiaopan/sketch/2.3.0-beta7/de43d0b8be66667ea4f0471eed03e00a30fa05c/sketch-2.3.0-beta7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

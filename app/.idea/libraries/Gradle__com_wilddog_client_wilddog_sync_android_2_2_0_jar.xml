@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.wilddog.client:wilddog-sync-android:2.2.0@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.wilddog.client/wilddog-sync-android/2.2.0/2629adfa238a163047920bc3ef6440a2a7c3990a/wilddog-sync-android-2.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.wilddog.client/wilddog-sync-android/2.2.0/a89f20d3b8fece621b45b03b9fe0b3be4b946b2/wilddog-sync-android-2.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

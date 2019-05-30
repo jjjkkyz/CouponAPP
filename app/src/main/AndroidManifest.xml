@@ -53,7 +53,6 @@
         <activity android:name=".Activity.Coupon_GridActivity" />
         <activity android:name=".Activity.Coupon_ListActivity" />
         <activity android:name=".Activity.PermissionActivity" />
-
         <activity
             android:name=".Activity.LikeActivity"
             android:screenOrientation="portrait">
@@ -99,6 +98,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <activity android:name=".Activity.EmailPasswordActivity" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

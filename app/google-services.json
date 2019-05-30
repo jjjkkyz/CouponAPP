@@ -15,11 +15,48 @@
       },
       "oauth_client": [
         {
-          "client_id": "197373818874-l5nqf5og5b3nn56hvashsv9u0gnu6qld.apps.googleusercontent.com",
+          "client_id": "197373818874-l45uf8b7gf576ddvd4huetnv5ie5p8gh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.edu.pu.cs.couponapp",
-            "certificate_hash": "59e435bdc9975117860f0b07f2eb868069a5a7e5"
+            "certificate_hash": "abb61b7d9164b8485ed58895108584b1f95208c0"
+          }
+        },
+        {
+          "client_id": "197373818874-4iu67gcshp877gqp35358ub7j1o7uimq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-2pUij09NYWvHLlMA6E4orCB7AyvTsjA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "197373818874-4iu67gcshp877gqp35358ub7j1o7uimq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197373818874:android:72fde066f2ab50aa",
+        "android_client_info": {
+          "package_name": "com.test.a"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197373818874-5tjmg71v824ri67h6u024mqa87pmjt8k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test.a",
+            "certificate_hash": "abb61b7d9164b8485ed58895108584b1f95208c0"
           }
         },
         {
