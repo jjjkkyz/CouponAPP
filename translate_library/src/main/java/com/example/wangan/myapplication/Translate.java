@@ -63,7 +63,7 @@ public class Translate {
             }
         }.start();
         try {
-            Thread.sleep(5000);
+            Thread.sleep(500);
         }catch (Exception e){
 
         }

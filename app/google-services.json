@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:197373818874:android:5fd4e315fa78bd7e",
+        "mobilesdk_app_id": "1:197373818874:android:746b39160f3c58f4",
         "android_client_info": {
-          "package_name": "com.edu.pu.cs.couponapp"
+          "package_name": "cn.edu.xmu.couponapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "197373818874-l45uf8b7gf576ddvd4huetnv5ie5p8gh.apps.googleusercontent.com",
+          "client_id": "197373818874-2k5l53p4b2jn34h4jd27du1hjf4teje4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.edu.pu.cs.couponapp",
+            "package_name": "cn.edu.xmu.couponapp",
             "certificate_hash": "abb61b7d9164b8485ed58895108584b1f95208c0"
           }
         },
@@ -45,17 +45,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:197373818874:android:72fde066f2ab50aa",
+        "mobilesdk_app_id": "1:197373818874:android:5fd4e315fa78bd7e",
         "android_client_info": {
-          "package_name": "com.test.a"
+          "package_name": "cn.edu.xmu.couponapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "197373818874-5tjmg71v824ri67h6u024mqa87pmjt8k.apps.googleusercontent.com",
+          "client_id": "197373818874-l45uf8b7gf576ddvd4huetnv5ie5p8gh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.test.a",
+            "package_name": "cn.edu.xmu.couponapp",
             "certificate_hash": "abb61b7d9164b8485ed58895108584b1f95208c0"
           }
         },

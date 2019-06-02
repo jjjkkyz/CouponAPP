@@ -56,7 +56,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "com.edu.pu.cs.couponapp"
+        applicationId "cn.edu.xmu.couponapp"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
