@@ -16,9 +16,6 @@ import cn.edu.xmu.couponapp.R;
 import java.util.ArrayList;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2016/10/30.
- */
 
 public class ListAdapter extends BaseAdapter {
     ArrayList<Map<String, String>> data;

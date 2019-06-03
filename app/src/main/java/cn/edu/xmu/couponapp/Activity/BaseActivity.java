@@ -1,8 +1,6 @@
 package cn.edu.xmu.couponapp.Activity;
 
-/**
- * Created by Administrator on 2016/11/12.
- */
+
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,7 +17,7 @@ import com.zhy.autolayout.AutoLayoutActivity;
 import java.lang.reflect.Field;
 
 /**
- * Created by hailonghan on 15/6/9.
+ * 基础activity设置
  */
 public abstract class BaseActivity extends AutoLayoutActivity implements SlidingPaneLayout.PanelSlideListener {
 

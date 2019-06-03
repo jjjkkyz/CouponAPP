@@ -1,5 +1,8 @@
 package cn.edu.xmu.couponapp.Bean;
 
+/**
+ * 优惠券信息
+ */
 public class Coupon {
     private String content;
     private String detailsimg;

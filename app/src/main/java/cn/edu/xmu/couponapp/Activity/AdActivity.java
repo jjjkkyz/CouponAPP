@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 /**
- * Created by Administrator on 2016/10/19.
+ * 显示广告外链
  */
 
 public class AdActivity extends AutoLayoutActivity {
@@ -25,14 +25,6 @@ public class AdActivity extends AutoLayoutActivity {
         //setContentView(R.layout.activity_main);
         //实例化WebView对象
         webview = new WebView(this);
-//        //设置WebView属性，能够执行Javascript脚本
-//        webview.getSettings().setJavaScriptEnabled(true);
-//        try {
-//            //设置打开的页面地址
-//            webview.loadUrl(adwebsite);
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
         setContentView(webview);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(adwebsite);

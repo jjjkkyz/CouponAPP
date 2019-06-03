@@ -41,7 +41,7 @@ import java.util.List;
 import qiu.niorgai.StatusBarCompat;
 
 /**
- * Created by Administrator on 2016/10/27.
+ *优惠券网格排版页面
  */
 
 public class Coupon_GridActivity extends ParallaxActivityBase {
@@ -52,15 +52,11 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
     // 文本描述集合
     private List<String> ContentList = new ArrayList<String>();
 
-    private List<String> BeginDateList = new ArrayList<>();
-    private List<String> EndDateList = new ArrayList<>();
-
     //Controls the initialization
     ImageGridView image_gridView = null;
 
     TextView title_big, title_xx;
 
-    private String map = null;
     ImageView titlelogo;
     private String TitleLogo = null;
 
@@ -70,17 +66,22 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
 
     private List<String> DetailsimgList = new ArrayList<String>();
 
+    //上下文
     private Context mContext;
 
+    //Firebase数据库引用
     private DatabaseReference mFirebasestore;
     private DatabaseReference mFirebaselogo;
 
+    //位置信息
     private double longitude;
     private double latitude;
+    //定位服务
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
     private AMapLocationListener mLocationListener;
     private AMapLocation mCurrentLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +95,6 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
 
         final ProgressDialog dialog5 = ProgressDialog.show(this, "稍候片刻", "折价券即将呈现", true, true);
         dialog5.onStart();
-        map = getIntent().getStringExtra("map");
 
         initView();
 
@@ -116,7 +116,6 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
 
         getStringValue(url+"/list");
 
-//        获取数据后，在这里点击就会把标题图片和内容传递过去，这里前提是你得保证有数据
         image_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -132,7 +131,6 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
                         in.putExtra("imgAddress", imgAddressList.get(i));
                         in.putExtra("content", ContentList.get(i));
                         in.putExtra("TitleLogo", TitleLogo);
-                        in.putExtra("map", map);
                         in.putExtra("listorgrid", listorgrid);
                         in.putExtra("detailsimgOrnot", DetailsimgList.get(i));
                         startActivity(in);
@@ -144,6 +142,7 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
                 }
             }
         });
+        //去除loading label
         dialog5.cancel();
 
     }
@@ -189,6 +188,7 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
 
     }
 
+
     public void gomap(View v) {
         Intent intent = new Intent(this, RouteNaviActivity.class);
         intent.putExtra("gps", false);
@@ -229,23 +229,4 @@ public class Coupon_GridActivity extends ParallaxActivityBase {
         finish();
     }
 
-    /**
-     * 检测该包名所对应的应用是否存在
-     * @param packageName
-     * @return
-     */
-    public boolean checkPackage(String packageName)
-    {
-        if (packageName == null || "".equals(packageName))
-            return false;
-        try
-        {
-            getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
-            return true;
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            return false;
-        }
-    }
 }

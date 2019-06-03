@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * Created by Administrator on 2016/11/19.
+ *网格排版详细信息
  */
 
 public class GridViewDetails extends GridView {

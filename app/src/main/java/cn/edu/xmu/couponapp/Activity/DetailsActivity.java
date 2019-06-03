@@ -50,31 +50,26 @@ import me.xiaopan.sketch.feature.zoom.ImageZoomer;
 import mehdi.sakout.fancybuttons.FancyButton;
 import qiu.niorgai.StatusBarCompat;
 
+/**
+ * 优惠券详情页
+ */
 public class DetailsActivity extends AutoLayoutActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
-    private String title, imgAddress, content, directory, TitleLogo;
+    private String title, imgAddress, content, TitleLogo;
     private FancyButton Btn_like;
     private Button translateButton;
-    private String[] a = new String[10];
-    //图片listview
 
 
     ImageView imageView;
     ArrayList<String> imgList = new ArrayList<String>();
-    ArrayList<String> likeornot = new ArrayList<String>();
     TextView textView;
     TextView textView2;
     TextView shareTextView;
-    SQLiteDatabase db;
-    String db_name = "coupon";
-    String tb_like_name = "like";
     ImageView titlelogo;
     private boolean isLike;
     //others
     private Button Others;
     private Button Sharebtn;
-    String path;
 
-    ImageZoomer imageZoomer;
     private String map = null;
 
     private String listorgrid = null;
@@ -87,7 +82,6 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
     //摇一摇
     private SensorManager sensorManager;
     private SensorEventListener shakeListener;
-    private AlertDialog.Builder dialogBuilder;
 
     private boolean isRefresh = false;
     private boolean isEnglish = false;
@@ -100,7 +94,6 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setBackEnable(true);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_details);
         StatusBarCompat.setStatusBarColor(DetailsActivity.this, getResources().getColor(R.color.background_color_orange));
@@ -112,30 +105,28 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         //
 
         gridView = (GridViewDetails) findViewById(R.id.detailsgrid);
-//        listView = (ListView) findViewById(R.id.detailslist);
 
         //others的设置
         Others = (Button) findViewById(R.id.others);
         Others.setOnClickListener(this);
 
-//        这里的三个分别就是传过来的数据了，进行显示就行
+
         title = getIntent().getStringExtra("title");
         imgAddress = getIntent().getStringExtra("imgAddress");
         content = getIntent().getStringExtra("content");
-        directory = getIntent().getStringExtra("directory");
         TitleLogo = getIntent().getStringExtra("TitleLogo");
         listorgrid = getIntent().getStringExtra("listorgrid");
         detailsImages = getIntent().getStringExtra("detailsImages");
 
         System.out.println(TitleLogo + "-----------titlelogo");
 
+        //翻译调用
         translateButton = (Button) findViewById(R.id.button);
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isEnglish){
                     Translate translate = new Translate();
-//                    shareTextView.setText(translate.translate("Want to share offers with friends?"));
                     shareTextView.setText(translate.translate(getResources().getString(R.string.shake2share)));
                 }
             }
@@ -153,14 +144,13 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         Btn_like.setBackgroundColor(Color.parseColor("#ea5413"));
         Btn_like.setFocusBackgroundColor(Color.parseColor("#ff5b14"));
         Btn_like.setIconResource("\uf08a");
-//        }
 
 
 
-//      把传递过来的title和content加载到预设的textview里面
+        //把传递过来的title和content加载到预设的textview里面
         textView.setText(title);
         textView2.setText(Html.fromHtml(content));
-//      再次读取图片detailsimg
+        //再次读取图片detailsimg
         System.out.println(detailsImages + "------detailsImages");
         if (detailsImages == null) {
             imgList.add(imgAddress);
@@ -174,17 +164,11 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
 
 
         gridView.setAdapter(new DetailsGridAdapter(DetailsActivity.this, imgList));
-        //Glide.with(DetailsActivity.this).load(imgList.get(0)).diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().thumbnail(0.1f).error(com.example.gridviewimage.R.mipmap.image_error).into(imageView);
 
-
+        //显示大图
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent in = new Intent();
-//                in.setClass(DetailsActivity.this, MaxPictureActivity.class);
-//                in.putExtra("pos", i);//必传项,i为当前点击的位置
-//                in.putStringArrayListExtra("imageAddress", imgList);//必传项,photos为要显示的图片地址集合
-//                startActivity(in);
                 PhotoPreview.builder()
                         .setPhotos(imgList)
                         .setCurrentItem(i)
@@ -314,7 +298,6 @@ public class DetailsActivity extends AutoLayoutActivity implements View.OnClickL
         titlelogo = (ImageView) findViewById(R.id.titlelogo);
         Sharebtn = (Button) findViewById(R.id.share);
         shareTextView = (TextView) findViewById(R.id.textView3);
-        //imageView = (SketchImageView) findViewById(R.id.imageView);
 
 
     }

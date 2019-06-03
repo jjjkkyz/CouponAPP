@@ -115,7 +115,6 @@ dependencies {
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
     //PushSDK
     implementation 'com.umeng.umsdk:push:5.0.2'
-    implementation 'com.wilddog.client:wilddog-sync-android:2.2.0'
 
     implementation "com.google.firebase:firebase-auth:17.0.0"
     implementation "com.google.android.gms:play-services-auth:16.0.1"

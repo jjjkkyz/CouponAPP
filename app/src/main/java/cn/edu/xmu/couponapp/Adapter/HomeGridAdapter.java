@@ -16,9 +16,6 @@ import cn.edu.xmu.couponapp.R;
 import java.util.ArrayList;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2016/11/3.
- */
 
 public class HomeGridAdapter extends BaseAdapter {
     ArrayList<Map<String, String>> data;

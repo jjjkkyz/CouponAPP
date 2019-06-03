@@ -7,8 +7,6 @@ import android.util.Log;
 
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
-import com.wilddog.wilddogcore.WilddogApp;
-import com.wilddog.wilddogcore.WilddogOptions;
 
 
 /**
@@ -24,9 +22,6 @@ public class FireCoupon extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        WilddogOptions options = new WilddogOptions.Builder().setSyncUrl("https://couponapp.wilddogio.com").build();
-        WilddogApp.initializeApp(this, options);
 
 
         PushAgent mPushAgent = PushAgent.getInstance(this);

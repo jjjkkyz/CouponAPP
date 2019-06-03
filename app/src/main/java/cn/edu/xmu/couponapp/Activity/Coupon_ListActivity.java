@@ -43,22 +43,15 @@ import java.util.Map;
 import qiu.niorgai.StatusBarCompat;
 
 /**
- * Created by Administrator on 2016/10/29.
+ *优惠券列表排版页面
+ * 写得比网格界面简单了一些
  */
 
 public class Coupon_ListActivity extends ParallaxActivityBase {
     private ListAdapter adapter;
     private ListView listView;
-    private String[] a = new String[10];
 
-    private List<String> BeginDateList = new ArrayList<>();
-    private List<String> EndDateList = new ArrayList<>();
-    // 标题集合
-    private List<String> titleList = new ArrayList<String>();
-    // 图片地址集合
-    private List<String> imgAddressList = new ArrayList<String>();
-    // 文本描述集合
-    private List<String> ContentList = new ArrayList<String>();
+
     // 所有数据的MAP集合
     private ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
@@ -70,18 +63,14 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
 
     private String listorgrid = "list";
 
-    private List<String> DetailsimgList = new ArrayList<String>();
-
     private Context mContext;
 
+    //数据库引用
     private DatabaseReference mFirebasestore;
     private DatabaseReference mFirebaselogo;
 
-    //有效期
-    private String begindate,enddate;
-    private long servertimestamp;
-    private String DateOver;
 
+    //导航相关
     private double longitude;
     private double latitude;
     private AMapLocationClient mLocationClient;
@@ -211,26 +200,5 @@ public class Coupon_ListActivity extends ParallaxActivityBase {
         };
         mLocationClient.setLocationListener(mLocationListener);
         mLocationClient.startLocation();
-    }
-
-
-    /**
-     * 检测该包名所对应的应用是否存在
-     * @param packageName
-     * @return
-     */
-    public boolean checkPackage(String packageName)
-    {
-        if (packageName == null || "".equals(packageName))
-            return false;
-        try
-        {
-            getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
-            return true;
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            return false;
-        }
     }
 }

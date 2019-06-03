@@ -58,9 +58,6 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".Activity.FeedBackAcitivity"/>
-        <activity android:name=".Activity.AboutActivity"/>
-        <activity android:name=".Activity.ShareAPPActivity"/>
         <activity android:name=".Activity.RouteNaviActivity"
             android:screenOrientation="portrait"/>
         <activity

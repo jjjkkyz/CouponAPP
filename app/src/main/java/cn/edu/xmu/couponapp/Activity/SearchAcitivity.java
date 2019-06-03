@@ -35,15 +35,9 @@ import me.iwf.photopicker.PhotoPreview;
 
 public class SearchAcitivity extends AutoLayoutActivity {
 	SearchView sv = null;
-	ListView lv = null;
-	SQLiteDatabase db;
-	String db_name = "coupon";
-	String tb_name = "CouponList";
 	ArrayList<Map<String, String>> grid = new ArrayList<Map<String, String>>();
 	List<String> urlList = new ArrayList<String>();
-	private String[] a = new String[10];
 	GridView image_gridView = null;
-	int countdata;
 	DatabaseReference storeRef;
 
 
@@ -51,17 +45,13 @@ public class SearchAcitivity extends AutoLayoutActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-//		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.search);
-//		StatusBarCompat.setStatusBarColor(SearchAcitivity.this,getResources().getColor(R.color.background_color_orange));
-//		final ProgressDialog dialog = ProgressDialog.show(this, "稍候片刻", "折價券即將呈現", true, true);
 		image_gridView=(GridView)findViewById(R.id.grid);
         image_gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
 		storeRef = FirebaseDatabase.getInstance().getReference("/coupon");
 
 		sv = (SearchView) this.findViewById(R.id.sv);
 
-//        sv.setIconifiedByDefault(false);
 		sv.clearFocus();
 		int currentapiVersion=android.os.Build.VERSION.SDK_INT;
 
@@ -135,18 +125,8 @@ public class SearchAcitivity extends AutoLayoutActivity {
 						in.setClass(SearchAcitivity.this, Coupon_ListActivity.class);
 						in.putExtra("url", urlList.get(i));//必传项,i为当前点击的位置
 						startActivity(in);
-//						PhotoPreview.builder()
-//								.setPhotos(grid)
-//								.setCurrentItem(i)
-//								.setShowDeleteButton(false)
-//								.start(SearchAcitivity.this);
-
 					}
 				});
-				/**
-				 *  Translate.this:为当前界面上下文
-				 *  grid:photos为要显示的图片地址集合
-				 * */
 
 				return false;
 			}

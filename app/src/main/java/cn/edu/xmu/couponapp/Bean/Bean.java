@@ -1,5 +1,8 @@
 package cn.edu.xmu.couponapp.Bean;
 
+/**
+ * 基础的数据交互对象，后来用来作为banner使用的类
+ */
 public class Bean {
 
     private String content;

@@ -16,6 +16,9 @@ import cn.edu.xmu.couponapp.R;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
+/**
+ * 动态权限申请
+ */
 public class PermissionActivity extends AppCompatActivity {
     private static final int NOT_NOTICE = 2;//如果勾选了不再询问
     private AlertDialog alertDialog;

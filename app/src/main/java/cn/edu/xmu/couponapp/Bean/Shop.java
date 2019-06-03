@@ -1,5 +1,8 @@
 package cn.edu.xmu.couponapp.Bean;
 
+/**
+ * 商店
+ */
 public class Shop {
     private String abbreviation;
     private String title;

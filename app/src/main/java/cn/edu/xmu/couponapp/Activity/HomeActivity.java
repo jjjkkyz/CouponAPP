@@ -42,8 +42,6 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
     private ImageView img1, img2, img3;
     private GridView gridview2,gridview3;
     private HomeGridAdapter adapter;
-    private String[] b2 = new String[10];
-    private String[] b3 = new String[10];
 
     private List<String> textlogoGird = new ArrayList<String>();
     // 图片地址集合
@@ -63,11 +61,6 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
     //商家位置map集合，传参到Coupon_ListActivity
     private List<String> mapList2 = new ArrayList<String>();
     private List<String> mapList3 = new ArrayList<String>();
-    //固定的数据库url
-    String databaseurl = "https://coupon-ed7bf.firebaseio.com/coupon_";
-    String databaseurl_wd = "coupon_";
-    //map的固定形式
-    String mapurl = "geo:0,0?q=";
 
     //Firebase实时数据库引用
     DatabaseReference myRef;
@@ -98,16 +91,14 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
         Intent it = new Intent(this, PermissionActivity.class);
         startActivity(it);
         myRef = FirebaseDatabase.getInstance().getReference();
-//        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        setBackEnable(false);
         setContentView(R.layout.home);
-//        StatusBarCompat.setStatusBarColor(HomeActivity.this,getResources().getColor(R.color.background_color_orange));
         gridview2 = (GridView) findViewById(R.id.gridview2);
         gridview3 = (GridView) findViewById(R.id.gridview3);
         gridview2.setSelector(new ColorDrawable(Color.TRANSPARENT));
         gridview3.setSelector(new ColorDrawable(Color.TRANSPARENT));
 
         initView();
+        //别人UI用的logo图
         String resource = "http://couponapp.image.alimmdn.com/titlelogo/hometitle.png?t=1487999390623";
         Glide.with(HomeActivity.this).load(resource).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().thumbnail(0.1f).error(com.example.gridviewimage.R.mipmap.image_error).into(Hometitle);
 
@@ -127,7 +118,6 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
                 map.put("title",banner.getTitle());
                 map.put("content",banner.getContent());
                 map.put("hotlogo",banner.getHotlogo());
-                map.put("map",mapurl+banner.getTextlogo());
                 map.put("detailsimgOrnot",banner.getDetailsimg());
                 list.add(map);
                 viewpager.setAdapter(new HomePicAdapter(HomeActivity.this, list));
@@ -146,7 +136,6 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
                         newMap.put("title",banner.getTitle());
                         newMap.put("content",banner.getContent());
                         newMap.put("hotlogo",banner.getHotlogo());
-                        newMap.put("map",mapurl+banner.getTextlogo());
                         newMap.put("detailsimgOrnot",banner.getDetailsimg());
                         list.add(newMap);
                         viewpager.setAdapter(new HomePicAdapter(HomeActivity.this, list));
@@ -172,7 +161,7 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
             }
         });
 
-        //加载第一排商户logo
+        //加载第一排商户logo，这里是写死的，后面是动态的，做方法对比
         String imglogo1 = "http://couponapp.image.alimmdn.com/Logo/KFC.png?t=1487955075694";
         String imglogo2 = "http://couponapp.image.alimmdn.com/Logo/McDonald.png?t=1487955075602";
         String imglogo3 = "http://couponapp.image.alimmdn.com/Logo/BurgerKing.png?t=1487955075648";
@@ -235,7 +224,7 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
 
 
     //获取数据的方法
-    ////第二排商户的GridView（便利商店）
+    ////第二排商户的GridView
     private void getStringValue2() {
         myStore2 = myRef.child("business_2");
         myStore2.addValueEventListener(new ValueEventListener() {
@@ -301,6 +290,7 @@ public class HomeActivity extends AutoLayoutActivity implements OnClickListener 
         startActivity(it);
     }
 
+    //第一排商家对应的写死的点击事件
     public void kfc_click() {
         Intent it = new Intent(this, Coupon_GridActivity.class);
         it.putExtra("url", "coupon/kfc");

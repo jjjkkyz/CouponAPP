@@ -37,13 +37,17 @@ import java.util.TimerTask;
 
 import qiu.niorgai.StatusBarCompat;
 
+/**
+ * 实现主界面的多Activity的切换
+ * 在initResourceRefs中写死了三个界面
+ */
 public class TabShow extends TabActivity {
 	private final static String TAG = "TabShow";
 	private TabHost mHost;
 	private RadioGroup tabItems;
 	private RadioButton tabhome,tabsearch,tablike;
 
-	// MineTab �� ���ҵġ� ��һѡ�� ����ʾ
+
 	private MineTab mineTab;
 	private PopupWindow minePop;
 	private RadioButton mineBut;
@@ -158,10 +162,7 @@ public class TabShow extends TabActivity {
 
 	/**
 	 * popWindow
-	 *
-	 * @author yuhaiyang
 	 */
-
 	public class MineTab {
 		private Context mContext;
 
@@ -191,9 +192,7 @@ public class TabShow extends TabActivity {
 			}
 		}
 
-		/**
-		 * ��ʾ popWindow
-		 */
+
 		public void showMine() {
 			// if(!minePop.isShowing()){
 
@@ -206,11 +205,7 @@ public class TabShow extends TabActivity {
 
 		}
 
-		/**
-		 * ��ʧ�Ի���
-		 *
-		 * @param isRa �ж��Ƿ��ǵ���� radioButton ����� ����Ҫ�Լ�ȥ�л�
-		 */
+
 		public void dismissMine(boolean isRa) {
 			if (minePop != null && minePop.isShowing())
 				minePop.dismiss();
@@ -224,9 +219,7 @@ public class TabShow extends TabActivity {
 	}
 
 
-	/**
-	 * �˳���ʧ
-	 */
+
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN

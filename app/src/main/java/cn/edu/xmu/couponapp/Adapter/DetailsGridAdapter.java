@@ -1,7 +1,6 @@
 package cn.edu.xmu.couponapp.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2016/11/14.
- */
 
 public class DetailsGridAdapter extends BaseAdapter {
     private List<String> gridItemList;

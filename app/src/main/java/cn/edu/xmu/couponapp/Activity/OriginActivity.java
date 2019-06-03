@@ -6,12 +6,11 @@ import android.os.Handler;
 import android.view.Window;
 
 import cn.edu.xmu.couponapp.R;
-import cn.edu.xmu.couponapp.ui.TabShow;
 import com.zhy.autolayout.AutoLayoutActivity;
-//import com.nian.preferential.ui.TabShow;
 
 import qiu.niorgai.StatusBarCompat;
 
+//初始启动器
 public class OriginActivity extends AutoLayoutActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

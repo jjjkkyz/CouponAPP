@@ -1,5 +1,8 @@
 package cn.edu.xmu.couponapp.Bean;
 
+/**
+ * 地图范围计算
+ */
 public class Bound {
     private Double latitude;
     private Double longitude;

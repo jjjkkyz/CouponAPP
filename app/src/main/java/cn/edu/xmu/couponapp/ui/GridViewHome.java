@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * Created by Administrator on 2016/11/8.
+ * 主页的网格排版需要的view
  */
 
 public class GridViewHome extends GridView {
